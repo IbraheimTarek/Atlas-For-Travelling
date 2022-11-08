@@ -1,13 +1,14 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
-console.log(process.env.secret);
+
 //icludeing the api's and libiraries
 const express = require("express");
 const ejsMate = require("ejs-mate");
 const app = express();
 const path = require("path");
 const method = require("method-override");
+const mysql = require("mysql2");
 
 app.engine("ejs", ejsMate); //to include the headers and the partial templates
 
@@ -19,6 +20,19 @@ app.set("views", path.join(__dirname, "views"));
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(method("_method"));
+
+//database connection infromation
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: process.env.DBPassword,
+  database: "hima",
+});
+connection.query("SELECT * FROM catsonhill ", function (err, results, fields) {
+  if (err) throw err;
+  console.log(results); // results contains rows returned by server
+  // console.log(fields); // fields contains extra meta data about results, if available
+});
 
 // handling users http requests
 app.use("/", async (req, res) => {
