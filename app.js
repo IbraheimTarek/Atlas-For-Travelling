@@ -1,6 +1,6 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
-}
+} //env is local file
 
 //icludeing the api's and libiraries
 const express = require("express");
