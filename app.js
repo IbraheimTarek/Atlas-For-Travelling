@@ -33,7 +33,7 @@ connection.query("SELECT * FROM catsonhill ", function (err, results, fields) {
   console.log(results); // results contains rows returned by server
   // console.log(fields); // fields contains extra meta data about results, if available
 });
-
+connection.end();
 // handling users http requests
 app.use("/", async (req, res) => {
   res.render("pages/home");
