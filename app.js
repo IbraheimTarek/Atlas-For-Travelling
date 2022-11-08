@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
-
+console.log(process.env.secret);
 //icludeing the api's and libiraries
 const express = require("express");
 const ejsMate = require("ejs-mate");
