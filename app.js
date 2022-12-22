@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 } //env is local file
-//himaikadada
+
 //icludeing the api's and libiraries
 const express = require("express");
 const ejsMate = require("ejs-mate");
@@ -26,13 +26,13 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: process.env.DBPassword,
-  database: "hima",
+  database: "mydb",
 });
-connection.query("SELECT * FROM catsonhill ", function (err, results, fields) {
-  if (err) throw err;
-  console.log(results); // results contains rows returned by server
-  // console.log(fields); // fields contains extra meta data about results, if available
-});
+// connection.query("SELECT * FROM catsonhill ", function (err, results, fields) {
+//   if (err) throw err;
+//   console.log(results); // results contains rows returned by server
+//   // console.log(fields); // fields contains extra meta data about results, if available
+// });
 connection.end();
 // handling users http requests
 app.use("/", async (req, res) => {
