@@ -548,7 +548,7 @@ body {
     transform: translate(-50%, -50%);
     text-align: center; }
 
-.row {
+.Row {
   max-width: 114rem;
   margin: 0 auto;
   /* 
@@ -560,43 +560,43 @@ body {
         }
     }
     */ }
-  .row:not(:last-child) {
+  .Row:not(:last-child) {
     margin-bottom: 8rem; }
-  .row:after {
+  .Row:after {
     content: "";
     display: table;
     clear: both; }
-  .row .cal-1-of-2 {
+  .Row .cal-1-of-2 {
     width: calc((100% - ( 1 * 6rem))/ 2);
     float: left; }
-    .row .cal-1-of-2:not(:last-child) {
+    .Row .cal-1-of-2:not(:last-child) {
       margin-right: 6rem; }
-  .row .cal-1-of-3 {
+  .Row .cal-1-of-3 {
     width: calc((100% - ( 2 * 6rem))/ 3);
     float: left; }
-    .row .cal-1-of-3:not(:last-child) {
+    .Row .cal-1-of-3:not(:last-child) {
       margin-right: 6rem; }
-  .row .cal-1-of-4 {
+  .Row .cal-1-of-4 {
     width: calc((100% - ( 3 * 6rem))/ 4);
     float: left; }
-    .row .cal-1-of-4:not(:last-child) {
+    .Row .cal-1-of-4:not(:last-child) {
       margin-right: 6rem; }
-  .row .cal-2-of-3 {
+  .Row .cal-2-of-3 {
     width: calc((100% - ( 1 * 6rem))/ 4);
     float: left;
     width: calc(100% - ((100% - ( 2 * 6rem)) / 3 + 6rem)); }
-    .row .cal-2-of-3:not(:last-child) {
+    .Row .cal-2-of-3:not(:last-child) {
       margin-right: 6rem; }
-  .row .cal-2-of-4 {
+  .Row .cal-2-of-4 {
     width: calc((100% - ( 1 * 6rem))/ 2);
     float: left; }
-    .row .cal-2-of-4:not(:last-child) {
+    .Row .cal-2-of-4:not(:last-child) {
       margin-right: 6rem; }
-  .row .cal-3-of-4 {
+  .Row .cal-3-of-4 {
     width: calc((100% - ( 1 * 6rem))/ 1.281);
     float: left;
     width: calc(100% - ((100% - ( 3 * 6rem)) / 4 + 6rem)); }
-    .row .cal-3-of-4:not(:last-child) {
+    .Row .cal-3-of-4:not(:last-child) {
       margin-right: 6rem; }
 
 /* the spicifity of the styling in css   */

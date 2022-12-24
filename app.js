@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(method("_method"));
 
-//database connection infromation
+//database connection infromation  
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -57,7 +57,7 @@ app.post("/places",async (req, res) => {
  });
 
 app.use("/", async (req, res) => {
-  res.render("pages/home");
+  res.render("pages/Trips");
 });
 
 //to open the server
