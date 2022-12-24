@@ -35,6 +35,9 @@ const connection = mysql.createConnection({
 // });
 connection.end();
 // handling users http requests
+app.use("/places/insertplace", async (req, res) => {
+  res.render("pages/insertplace");
+});
 app.use("/", async (req, res) => {
   res.render("pages/home");
 });
