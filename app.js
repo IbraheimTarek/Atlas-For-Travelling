@@ -25,7 +25,7 @@ app.use(method("_method"));
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: 'qqqq1111',
+  password: 'bogo',//passwordchanges
   database: "mydb",
 });
 // connection.query("SELECT * FROM catsonhill ", function (err, results, fields) {
