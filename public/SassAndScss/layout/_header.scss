@@ -1,0 +1,40 @@
+.header {
+    height: 95vh; 
+    /* we always use vh to better tech.s */
+    /*  
+    background-image: first , second;
+    then the image of the first will be upper the second 
+    and to make the second appear partly u should change the opacity of the first 
+    */
+    background-image:linear-gradient(to right bottom ,rgba($color-primary-light,0.8) , rgba($color-primary-dark,0.8) ) , url("../img/hero-small.jpg") ;
+    background-size: cover;
+     background-position:top ; /* cover the elemnt even if it cut itself but with this prop it will make periority to part of 
+     the image {top or center of bottom }*/
+     clip-path: polygon(0 0,100% 0 ,100% 80% ,0 100% ); /* new prop to determine what part to be visible ( top l,top r ,bottom r ,bottom)
+     u can use coordinates from clip-path maker */
+
+     
+     position: relative;
+     
+     .logo-box {
+       position: absolute;
+       top: 4rem;
+       left: 4rem;
+         
+       .logo  {
+         height: 3.5rem;
+       /* u can just determine the height and the compiler will relative the width to the actual width  */
+       }
+       }
+ 
+       .text-box{
+         position: absolute;
+         top: 40%;
+         /* we dont make it exatly at the middle */
+         left:50%;
+         transform: translate(-50%,-50%);
+         text-align: center;
+         
+       }
+     
+  }

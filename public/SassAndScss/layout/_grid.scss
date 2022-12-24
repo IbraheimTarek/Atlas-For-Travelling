@@ -1,0 +1,45 @@
+
+.row {
+    max-width:$grid-width;
+    margin:0 auto ;
+    &:not(:last-child) {
+        margin-bottom: $gutter-vertical;
+    }
+
+    @include clearFix;// it is for parent only 
+
+    // he did it with 
+    /* 
+    [class^="cal-"] {
+        background-color: orangered;
+        float: left;
+        &:not(:last-child){
+            margin-right:$gutter-horizontal ;
+        }
+    }
+    */
+
+    .cal-1-of-2{
+        @include column-shape(1,2);
+    }
+    .cal-1-of-3{
+        @include column-shape(2,3);
+    }
+    .cal-1-of-4{
+        @include column-shape(3,4 );
+    }
+    .cal-2-of-3{
+        @include column-shape(1,4); // number are wrong but we will overrite it now
+        width:calc(100% - ((100% - ( 2 * #{$gutter-horizontal})) / 3 + #{$gutter-horizontal}) );
+        
+    }
+    .cal-2-of-4 {
+        @include column-shape(1,2 );
+    }
+    .cal-3-of-4{
+        @include column-shape(1,1.281);
+        width:calc(100% - ((100% - ( 3 * #{$gutter-horizontal})) / 4 + #{$gutter-horizontal}) );
+    }
+}
+
+

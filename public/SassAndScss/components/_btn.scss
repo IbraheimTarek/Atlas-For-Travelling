@@ -1,0 +1,100 @@
+.btn {
+    
+    &:link , 
+    &:visited{ 
+      /* we want the visited state to be the same as the link state
+        so we dont have purpul link after visiting this link
+      */ 
+      text-transform: uppercase;
+      text-decoration:none;
+      padding: 1.5rem 4rem;
+      display: inline-block;
+      border-radius: 10rem;
+      /*just put any high number and it will shape it perfectly   */
+      transition:all 0.2s;
+      /*all to apply all the trans prop.s ......and it must be in the initial element case   */  
+      position:relative; 
+    }
+    
+    &:hover {
+      transform: translateY(-0.3rem);
+      box-shadow: 0 1rem 2rem rgba($color-black , 0.2);
+      
+      &::after {
+        /* when we hover the btn i want the after to be the following  */
+        transform: scaleX(1.4) scaleY(1.6);
+        opacity: 0;
+      }
+    }
+    &:active {
+    /*active is once the element been clicked  */
+      transform: translateY(-0.1rem);
+      /* this will make the btn goes down  */
+      box-shadow: 0 .5rem 1rem rgba($color-black,0.2);
+    }
+   
+   &--white {
+     color:$color-grey-dark;
+     background-color: $color-white;
+     
+     &::after {
+       background-color: $color-white;
+       
+     }
+   }
+   &--green {
+     color:$color-white;
+     background-color: $color-primary;
+     
+     &::after {
+       background-color: $color-primary;
+       
+     }
+   }
+   &::after {
+    /* to make after appear u must use both display and content */
+    content: "";
+    display:inline-block;
+    /* after is child to .btn */
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    left:0;
+    z-index: -1;
+    transition: all 0.4s  ;
+  }
+  
+  &-animated {
+    animation: ToUpp .5s ease-out 0.75s;
+    animation-fill-mode: backwards;
+    /*that return the animation back to before 0% frame or to the ......read in css file   */
+    
+  } 
+  }
+
+.btn-text {
+  &:visited ,
+  &:link {
+    text-decoration: none;
+    font-size: $default-font-size;
+    color: $color-primary;
+    display: inline-block;
+    padding: 3px;
+    border-bottom: 1px solid $color-primary;
+    transition: all .2s;
+  }
+  &:hover {
+    background-color: $color-primary;
+    color: $color-white;
+    box-shadow: 0 1rem 2rem rgba($color-black , 0.15);
+    transform: translateY(-2px);
+
+  }
+  &:active{
+    box-shadow: 0 1rem 2rem rgba($color-black , 0.15);
+    transform: translateY(0);
+
+  }
+}

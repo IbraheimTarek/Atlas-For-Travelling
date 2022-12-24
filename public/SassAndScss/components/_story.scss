@@ -1,0 +1,64 @@
+.story {
+    background-color:rgba($color-white, .7) ;
+    width: 75%;
+    padding: 6rem;
+    padding-left: 9rem;
+    margin: 0 auto;
+    box-shadow: 0 3rem 6rem rgba($color-black, .1);
+    border-radius: 3px;// always to not making it looks sharp
+    font-size: $default-font-size;
+    transform: skewx(-12deg);
+    & > * {
+        transform: skewx(12deg);
+        //  u should do it inside every child if we have the following related
+    }
+
+    &__shape {
+        float: left;// to make it float we must give it width and hight 
+        height: 15rem;
+        width: 15rem;
+        shape-outside: circle(50% at 50% 50%);// like clip-pass it determine the border of the element to the other element 
+        // circle (radius at the center of the radius{x & y } )
+        // and to only show the determined border we use clip-bath 
+        clip-path: circle(50% at 50% 50%);
+        margin-right: 3rem; 
+        // or we can use translate like
+        // transform: translateX(-3rem); related  if it existed we should do th following  transform: translateX(-3rem) , skew(12deg);
+        overflow: hidden;
+        position: relative;
+        transition: all .5s;
+        backface-visibility: hidden; // relate  when face any shake in transformation animation we use this and no one know why 
+
+
+    }
+    &__img {
+        height: 100%;
+        transition: inherit;
+        transform: translateX(-4rem) scale(1.4);
+        backface-visibility: inherit;// relate when face any shake in transformation animation we use this and no one know why
+    }
+    &__caption {
+        text-align: center;
+        line-height: 1.5;
+        color: $color-grey-light-1;
+        font-weight: 500;
+        font-size: 2rem;
+        position: absolute;
+        top: 10rem;
+        left: 50%;
+        transform:translate(-50%,-50%) ; 
+        transition: inherit;       
+        opacity: 0;
+        backface-visibility: inherit;// relate  when face any shake in transformation animation we use this and no one know why 
+    }
+    &:hover &__shape {
+        .story__caption {
+            top: 50%;
+            opacity: 1;
+        }
+        .story__img {
+            filter: blur(3px) brightness(80%); // brightness less than 100% make it darker 
+            transform: translateX(-4rem) scale(1);
+        }
+    }
+}

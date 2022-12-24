@@ -1,0 +1,24 @@
+@mixin clearFix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin column-shape($gutters,$n) {
+    width:calc((100% - ( #{$gutters} * #{$gutter-horizontal}))/ #{$n} );
+    float: left;
+    &:not(:last-child){
+        margin-right:$gutter-horizontal ;
+    }
+}
+
+@mixin gradient_Text {
+    background-image: linear-gradient(to right ,$color-primary-light , $color-primary-dark); 
+    // this makes the background of the element be gradient 
+    -webkit-background-clip: text; 
+    // this prob makes the back ground only back the text no where else 
+    color: transparent;
+    // and then we transparent the  text so we can see the background
+  }

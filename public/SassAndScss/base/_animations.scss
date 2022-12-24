@@ -1,0 +1,40 @@
+/////////////////////////// all the animations styles ////////////////////////// 
+
+@keyframes InMoveLeft{
+    0% {
+      opacity:0;
+      transform:translateX(-10rem);
+    }
+    80%{
+      transform:translateX(1rem);
+    }
+    100%{
+      opacity:1;
+      transform:translate(0);
+    }
+  }
+  @keyframes InMoveRight{
+    0% {
+      opacity:0;
+      transform:translateX(10rem);
+    }
+    80%{
+      transform:translateX(-1rem);
+    }
+    100%{
+      opacity:1;
+      transform:translate(0);
+    }
+  }
+  
+  @keyframes ToUpp {
+    0% {
+      opacity:0;
+      transform:translateY(10rem);
+    }
+    100%{
+      opacity:1;
+      transform:translate(0);
+    }
+  }
+ 

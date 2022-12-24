@@ -17,7 +17,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // getting styles and js fronten files from the public dirctory
-app.use("/public", express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname,'public')));   // i've edit this line hema to connect my css files
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(method("_method"));
@@ -26,7 +26,7 @@ app.use(method("_method"));
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: 'bogo',//passwordchanges
+  password: 'qqqq1111',//passwordchanges
   database: "mydb",
 });
 // connection.query("SELECT * FROM catsonhill ", function (err, results, fields) {
@@ -64,3 +64,5 @@ app.use("/", async (req, res) => {
 app.listen(3000, () => {
   console.log("Serving on port 3000");
 });
+
+

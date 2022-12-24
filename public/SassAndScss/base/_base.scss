@@ -1,0 +1,34 @@
+////////////////////////// here we put the basic definitions about the entire project //////////////////////////
+
+/* 
+he says that the normalize that elzero said  is no more necessary 
+*/
+
+
+
+
+
+
+
+
+/* * only specify all the normal elments not the psuedo elements too so we have to add *::after and *::before  */
+*,
+*::after ,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing:inherit;
+  /*the using of inheritence  */
+}
+/*u will chang  all px to rem   */
+ 
+html {
+  font-size: 62.5%;
+  /* this size = 10px  */
+  // and its not typography because it is define what 1rem equal
+}
+/* now 1rem = 10px */
+
+ body{
+  box-sizing: border-box;
+ }

@@ -1,0 +1,172 @@
+
+// sass is a preprocessor of css 
+
+* {
+  margin: 0;
+  padding: 0;
+}
+$primary-color:#777; // this is how to write a variable && comment 
+$secondary-color:#eee;
+$tertiary-color:#feb0; 
+
+body {
+  background-color:$primary-color;
+  
+}
+
+// this part is compiled to css code 
+
+// one of advantages of sass is nesting selectors 
+/*
+sel1 {
+  sel2 {
+    
+  }
+}
+// equal to sel1 sel2 { }
+
+*/
+
+/*
+sel1 {
+  sel2 {
+    &:first-child {
+    
+    }
+  }
+}
+// equal to sel1 sel2:first-child { }
+
+*/
+
+
+
+.navigation {
+  list-style:none;
+  
+  li {
+    display: inline-block;
+    margin-left:15px;
+    &:first-child {
+      margin-left:0;
+    }
+    
+    a {
+      text-decoration:none;
+      text-transform:upper-case;
+    }
+    
+  }
+}
+
+
+//////////The mixins //////// way to not repeat ur self 
+// it is like a variable of punch of code lines 
+@mixin theNameOfMixin {
+  // the punch of code 
+}
+
+@mixin clear-float {
+  &:after{
+    content: "";
+    display:table;
+    clear:both ;
+  }
+}
+
+.navigation {
+  // any code 
+  
+  @include clear-float ;
+}
+
+
+
+//the mixin can have argument as a function 
+@mixin theNameOfMixin($color) {
+  // the punch of code 
+  // this $color will be passed when we call this mixin 
+}
+
+///functions///// its not practical in css 
+@function divide ($a , $b) {
+  @return $a / $b ;
+}
+// we call functions by just like margin:divide(30px , 2px);
+
+
+
+////  extend ///// the same as mixin but the differetn that in mixin we copy the punch of code inside the selector 
+// but in extend we copy the current selector out the  punch of code 
+
+%btn-place-holder {
+   // punch of code 
+}
+
+selector1 {
+  @extend %btn-place-holder ;
+}
+selector2 {
+  @extend %btn-place-holder ;
+}
+
+/* this equivilent to the following */ 
+selector1 ,
+selector2 {
+  //punch of code 
+}
+
+
+
+
+
+
+
+////////////////////////// samary of all symbols ////////////////////////// 
+// $ with variables
+// & connecting nested selector 
+// @ mixin and including this mixin , function and returning this function , @ extend calling extend 
+// % extend like $ will every time u call this extend 
+
+
+////////////////////////// ways to make ur website responsible ////////////////////////// 
+// 1- use persentage & rem  insteed  of px
+// 2-  layout type { }
+
+
+
+
+////////////////////////// NOTES ////////////////////////// 
+// to pass sass variable in calc() u have to cover it with calc(100% - #{$variable} );
+//[attribute]	[target]	Selects all elements with a target attribute
+//[attribute=value]	[target=_blank]	Selects all elements with target="_blank"
+//[attribute^=value]	a[href^="https"]	Selects every <a> element whose href attribute value begins with "https"
+//[attribute$=value]	a[href$=".pdf"]	Selects every <a> element whose href attribute value ends with ".pdf"
+// ... and so on 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
