@@ -1,35 +1,44 @@
 <% layout("boilerplate") %>
 
-<div class="container  mt-5 mb-5">
-    <form>
-        <div class="mb-3">
-          <label for="placeName" class="form-label">Name</label>
-          <input type="text" class="form-control" id="placeName" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-          <label for="countryName" class="form-label">Country Name</label>
-          <input type="text" class="form-control" id="countryName">
-        </div>
-        <div class="mb-3">
-            <label for="longitude" class="form-label">Longitude</label>
-            <input type="text" class="form-control" id="Longitude">
-          </div>
-          <div class="mb-3">
-            <label for="latitude" class="form-label">latitude</label>
-            <input type="text" class="form-control" id="latitude">
-          </div>
-          <div class="mb-3">
-            <label for="population" class="form-label">Population</label>
-            <input type="text" class="form-control" id="Population">
-          </div>
-          <div class="mb-3">
-            <label for="history" class="form-label">history</label>
-            <input type="text" class="form-control" id="history">
-          </div>
-          <div class="mb-3">
-            <label for="religion" class="form-label">religion</label>
-            <input type="text" class="form-control" id="religion">
-          </div>
-        <button type="submit" class="btn btn-primary">Insert</button>
-    </form> 
+<div class="container mt-5 mb-5">
+  <form
+    action="/places"
+    method="post"
+  >
+    <div class="mb-3">
+      <label for="placeName" class="form-label">Name</label>
+      <input
+      name="name"
+        type="text"
+        class="form-control"
+        id="placeName"
+        aria-describedby="emailHelp"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="countryName" class="form-label">Country Name</label>
+      <input name="country_name" type="text" class="form-control" id="countryName" />
+    </div>
+    <div class="mb-3">
+      <label for="longitude" class="form-label">Longitude</label>
+      <input name="longitude" type="text" class="form-control" id="Longitude" />
+    </div>
+    <div class="mb-3">
+      <label for="latitude" class="form-label">Latitude</label>
+      <input name="latitude" type="text" class="form-control" id="latitude" />
+    </div>
+    <div class="mb-3">
+      <label for="population" class="form-label">Population</label>
+      <input name="population" type="text" class="form-control" id="Population" />
+    </div>
+    <div class="mb-3">
+      <label for="history" class="form-label">history</label>
+      <input name="history" type="text" class="form-control" id="history" />
+    </div>
+    <div class="mb-3">
+      <label for="religion" class="form-label">Religion</label>
+      <input name="religion" type="text" class="form-control" id="religion" />
+    </div>
+    <button type="submit" class="btn btn-primary">Insert</button>
+  </form>
 </div>

@@ -18,6 +18,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // getting styles and js fronten files from the public dirctory
 app.use("/public", express.static(path.join(__dirname, "public")));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(method("_method"));
 
@@ -25,7 +26,7 @@ app.use(method("_method"));
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: 'qqqq1111',//passwordchanges
+  password: 'bogo',//passwordchanges
   database: "mydb",
 });
 // connection.query("SELECT * FROM catsonhill ", function (err, results, fields) {
@@ -33,11 +34,28 @@ const connection = mysql.createConnection({
 //   console.log(results); // results contains rows returned by server
 //   // console.log(fields); // fields contains extra meta data about results, if available
 // });
-connection.end();
 // handling users http requests
 app.use("/places/insertCity", async (req, res) => {
   res.render("pages/insertCity");
 });
+app.post("/places",async (req, res) => {
+  console.log(req.body)
+   connection.query('INSERT INTO place (longitude, latitude, name, country_name) VALUES (?,?,?,?)', [req.body.longitude, req.body.latitude, req.body.name, req.body.country_name],
+   (error, results) => {
+    if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+     });
+   connection.query('INSERT INTO city (place_longitude, place_latitude, religion, history, population) VALUES (?,?,?,?,?)', [req.body.longitude, req.body.latitude, req.body.religion, req.body.history, req.body.population],
+  (error, results) => {
+    if (error) throw error;
+      console.log(error)
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+     });
+     res.redirect('/places');
+ });
+
 app.use("/", async (req, res) => {
   res.render("pages/home");
 });
