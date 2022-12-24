@@ -1,0 +1,44 @@
+<% layout("boilerplate") %>
+
+<div class="container mt-5 mb-5">
+  <form
+    action="/places"
+    method="post"
+  >
+    <div class="mb-3">
+      <label for="placeName" class="form-label">Name</label>
+      <input
+      name="name"
+        type="text"
+        class="form-control"
+        id="placeName"
+        aria-describedby="emailHelp"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="countryName" class="form-label">Country Name</label>
+      <input name="country_name" type="text" class="form-control" id="countryName" />
+    </div>
+    <div class="mb-3">
+      <label for="longitude" class="form-label">Longitude</label>
+      <input name="longitude" type="text" class="form-control" id="Longitude" />
+    </div>
+    <div class="mb-3">
+      <label for="latitude" class="form-label">Latitude</label>
+      <input name="latitude" type="text" class="form-control" id="latitude" />
+    </div>
+    <div class="mb-3">
+      <label for="landType" class="form-label">Land Type</label>
+      <input name="landType" type="text" class="form-control" id="landType" />
+    </div>
+    <div class="mb-3">
+      <label for="photoURL" class="form-label">Photo URL</label>
+      <input name="photoURL" type="text" class="form-control" id="photoURL" />
+    </div>
+    <div class="mb-3">
+      <label for="discription" class="form-label">Discription</label>
+      <textarea name="discription" class="form-control" id="discription" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Insert</button>
+  </form>
+</div>

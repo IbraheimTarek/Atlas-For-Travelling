@@ -29,38 +29,34 @@ const connection = mysql.createConnection({
   password: 'bogo',//passwordchanges
   database: "mydb",
 });
-// connection.query("SELECT * FROM catsonhill ", function (err, results, fields) {
-//   if (err) throw err;
-//   console.log(results); // results contains rows returned by server
-//   // console.log(fields); // fields contains extra meta data about results, if available
-// });
-// handling users http requests
-app.use("/places", async (req, res) => {
+app.get("/places", async (req, res) => {
   console.log(req.body)
-   connection.query('SELECT * FROM place  as p, city as c where p.longitude = c.longitude AND p.latitude = c.latitude', //, natureReserve as n, topography as t 
+   connection.query('SELECT longitude,latitude,`name`,`history`,population,religion FROM place INNER JOIN city ON longitude = place_longitude AND latitude = place_latitude;', //, returns an object arrys 
    (error, results) => {
     if (error) throw error;
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
      });
-  res.render("pages/places");
+  res.render("pages/Trips");
 });
-app.use("/places/insertCity", async (req, res) => {
+app.get("/places/insertCity", async (req, res) => {
   res.render("pages/insertCity");
 });
-app.use("/places/insertNatureReserve", async (req, res) => {
+app.get("/places/insertNatureReserve", async (req, res) => {
   res.render("pages/insertNatureReserve");
+});
+app.get("/places/insertTopography", async (req, res) => {
+  res.render("pages/insertTopography");
 });
 
 app.post("/places",async (req, res) => {
-  console.log(req.body)
-   connection.query('INSERT INTO place (longitude, latitude, name, country_name) VALUES (?,?,?,?)', [req.body.longitude, req.body.latitude, req.body.name, req.body.country_name],
+   connection.query('INSERT INTO place (longitude, latitude, `name`, country_name) VALUES (?,?,?,?)', [req.body.longitude, req.body.latitude, req.body.name, req.body.country_name],
    (error, results) => {
     if (error) throw error;
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
      });
-   connection.query('INSERT INTO city (place_longitude, place_latitude, religion, history, population) VALUES (?,?,?,?,?)', [req.body.longitude, req.body.latitude, req.body.religion, req.body.history, req.body.population],
+   connection.query('INSERT INTO city (place_longitude, place_latitude, religion, `history`, population) VALUES (?,?,?,?,?)', [req.body.longitude, req.body.latitude, req.body.religion, req.body.history, req.body.population],
   (error, results) => {
     if (error) throw error;
       console.log(error)
@@ -77,8 +73,13 @@ app.post("/places",async (req, res) => {
      res.redirect('/places');
  });
 
+
 app.use("/", async (req, res) => {
-  res.render("pages/Trips");
+  res.render("pages/home");
+});
+
+app.all("*", (req, res, next) => {
+  next(new ExpressErrors("Page Not Found", 404));
 });
 
 //to open the server
