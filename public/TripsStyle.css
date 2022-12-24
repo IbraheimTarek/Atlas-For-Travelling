@@ -1,0 +1,913 @@
+:root {
+    --main-color:#10cab7;
+    --secendary-color:#2c4755;
+  
+  }
+  /* end global variable */
+  
+  /* start global rules */
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+  
+  }
+  body {
+    font-family: "Edu VIC WA NT Beginner", cursive;
+    font-family: "Work Sans", sans-serif;
+  }
+  
+  /* container is to make it more readable to the user  */
+  .container1 {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* Small */
+  @media (min-width: 768px) {
+    .container1 {
+      width: 750px;
+    }
+  }
+  /* Medium */
+  @media (min-width: 992px) {
+    .container1 {
+      width: 970px;
+    }
+  }
+  /* Large */
+  @media (min-width: 1200px) {
+    .container1 {
+      width: 1170px;
+    }
+  }
+  /* end global rules */
+  /* start global component */
+  .special-heading {
+    color: #777;
+    font-size: 100px;
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: -3px;
+    margin: 0;
+  }
+  .special-heading + p {
+    text-align: center;
+    margin: -30px 0 0;
+    font-size: 20px;
+    color: #797979;
+  }
+  @media (max-width:767px) {
+   .special-heading {
+    font-size: 60px;
+   } 
+   .special-heading + p {
+    margin: -20px 0 0;
+   }
+  }
+  /* end global component */
+  /* start header */
+  .header1 {
+    padding: 20px;
+  }
+  .header1 .container1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header1 .links {
+    position: relative;
+  }
+  .header1 .links:hover span:nth-child(2) {
+    width: 100%;
+  }
+  .header1 .logo {
+    width: 60px;
+  }
+  .header1 .sandwich-icon {
+    width: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+  }
+  .header1 .sandwich-icon span {
+    width: 100%;
+    background-color: black;
+    height: 2px;
+    margin-bottom: 5px;
+  }
+  .header1 .container1 .sandwich-icon span:nth-child(2) {
+    width: 60%;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -ms-transition: 0.3s;
+    -o-transition: 0.3s;
+  }
+  .header1 .links:hover span:nth-child(2) {
+    width: 100%;
+  }
+  .header1 .links:hover ul {
+    display: block;
+  }
+  .header1 .links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #f6f6f6;
+    position: absolute;
+    min-width: 200px;
+    right: 0;
+    top: calc(100% + 15px);
+    display: none;
+    /* the landing pic will hide it if i don't do the following */
+    z-index: 3;
+    /*adding from me*/
+    transition: 0.3s;
+  }
+  .header1 .links ul::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #f6f6f6 transparent;
+    position: absolute;
+    right: 5px;
+    top: -20px;
+  }
+  .header1 .links ul li a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: #333;
+    transition: 0.3s;
+  }
+  .header1 .links ul li a:hover {
+    padding-left: 25px;
+  }
+  .header1 .links ul li:not(:last-child) a {
+    border-bottom: 1px solid #ddd;
+  }
+  /* end header1  */
+
+  /* start Trips */
+  .Trips {
+    padding-top: 60px;
+    padding-bottom  : 60px;
+    
+    
+  }
+  .Trips  .special-heading {
+    color: #c7c7c7;
+  }
+  
+ 
+  /* end Trips */
+
+      
+
+
+
+
+
+/* the second  */
+
+
+
+
+
+
+
+
+      /* 
+      he says that the normalize that elzero said  is no more necessary 
+      */
+      /* * only specify all the normal elments not the psuedo elements too so we have to add *::after and *::before  */
+      *,
+      *::after,
+      *::before {
+        margin: 0;
+        padding: 0;
+        box-sizing: inherit;
+        /*the using of inheritence  */ }
+      
+      /*u will chang  all px to rem   */
+      html {
+        font-size: 62.5%;
+        /* this size = 10px  */ }
+      
+      /* now 1rem = 10px */
+      body {
+        box-sizing: border-box; }
+      
+      .u-center-text {
+        text-align: center; }
+      
+      .u-margin-bottom-big {
+        margin-bottom: 8rem; }
+      
+      .u-margin-bottom-medium {
+        margin-bottom: 4rem; }
+      
+      .u-margin-bottom-small {
+        margin-bottom: 1.5rem; }
+      
+      .u-margin-top-big {
+        margin-top: 8rem; }
+      
+      .u-margin-auto {
+        margin: 0 auto; }
+      
+      body {
+        /*
+       we will use the power of inheretence using body
+         */
+        font-family: "Lato",sans-serif;
+        font-weight: 400;
+        line-height: 1.7;
+        color: #777;
+        /* to make the cover showing to the body only  */
+        padding: 3rem;
+        font-size: 1.6rem;
+        /* we will use whether 10px or 10/16%  if there will be several initialized value from several browsers  */ }
+      
+      .heading-primary {
+        color: #fff;
+        text-transform: uppercase;
+        /* backface-visibility: hidden; */
+        /* i dont see any diff */
+        margin-bottom: 6rem; }
+        .heading-primary span:first-child {
+          display: block;
+          letter-spacing: 3.5rem;
+          font-size: 6rem;
+          font-weight: 400;
+          animation-name: InMoveLeft;
+          animation-duration: 1s;
+          animation-delay: 0s;
+          animation-iteration-count: 1;
+          animation-timing-function: ease; }
+        .heading-primary span:last-child {
+          display: block;
+          letter-spacing: 1.74rem;
+          font-size: 1.5rem;
+          font-weight: 700;
+          animation-name: InMoveRight;
+          animation-duration: 1s;
+          animation-delay: 0s;
+          animation-iteration-count: 1;
+          animation-timing-function: ease;
+          margin-bottom: 6rem; }
+      
+      .heading-secondary {
+        font-size: 3.5rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        background-image: linear-gradient(to right, #7ed56f, #28b485);
+        -webkit-background-clip: text;
+        color: transparent;
+        letter-spacing: .2rem;
+        transition: all .2s; }
+        .heading-secondary:hover {
+          transform: skew(15deg, 2deg) scale(1.1);
+          text-shadow: 0.5rem 1rem 2rem rgba(0, 0, 0, 0.2); }
+      
+      .heading-tertiary {
+        font-weight: 700;
+        font-size: 1.6rem;
+        text-transform: uppercase; }
+      
+      .paragraph {
+        font-size: 1.6rem; }
+        .paragraph:not(:last-child) {
+          margin-bottom: 1.5rem; }
+      
+      .section-about {
+        background-color: #f7f7f7;
+        padding: 25rem 0;
+        margin-top: -20vh; }
+      
+      .section-feature {
+        padding: 20rem 0;
+        background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url("/img/nat-4.jpg");
+        background-size: cover;
+        background-position: top;
+        margin-top: -10rem;
+        transform: skewY(-7deg); }
+        .section-feature > * {
+          transform: skewY(7deg); }
+      
+      .section-tours {
+        background-color: #f7f7f7;
+        padding: 25rem 0 15rem;
+        margin-top: -10vh; }
+      
+      .section-story {
+        background-color: transparent;
+        overflow: hidden;
+        position: relative;
+        padding: 15rem 0; }
+      
+      .section-book {
+        padding: 15rem 0;
+        background-image: linear-gradient(to right bottom, #7ed56f, #28b485); }
+      
+      .book {
+        background-image: linear-gradient(100deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.9) 50%, transparent 50%), url("/img/nat-10.jpg");
+        background-size: cover;
+        height: 60rem;
+        border-radius: 3px;
+        box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15); }
+        .book__form {
+          width: 50%;
+          padding: 6rem; }
+      
+      .btn:link, .btn:visited {
+        /* we want the visited state to be the same as the link state
+              so we dont have purpul link after visiting this link
+            */
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.5rem 4rem;
+        display: inline-block;
+        border-radius: 10rem;
+        /*just put any high number and it will shape it perfectly   */
+        transition: all 0.2s;
+        /*all to apply all the trans prop.s ......and it must be in the initial element case   */
+        position: relative; }
+      
+      .btn:hover {
+        transform: translateY(-0.3rem);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
+        .btn:hover::after {
+          /* when we hover the btn i want the after to be the following  */
+          transform: scaleX(1.4) scaleY(1.6);
+          opacity: 0; }
+      
+      .btn:active {
+        /*active is once the element been clicked  */
+        transform: translateY(-0.1rem);
+        /* this will make the btn goes down  */
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); }
+      
+      .btn--white {
+        color: #777;
+        background-color: #fff; }
+        .btn--white::after {
+          background-color: #fff; }
+      
+      .btn--green {
+        color: #fff;
+        background-color: #55c57a; }
+        .btn--green::after {
+          background-color: #55c57a; }
+      
+      .btn::after {
+        /* to make after appear u must use both display and content */
+        content: "";
+        display: inline-block;
+        /* after is child to .btn */
+        height: 100%;
+        width: 100%;
+        border-radius: 10rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all 0.4s; }
+      
+      .btn-animated {
+        animation: ToUpp .5s ease-out 0.75s;
+        animation-fill-mode: backwards;
+        /*that return the animation back to before 0% frame or to the ......read in css file   */ }
+      
+      .btn-text:visited, .btn-text:link {
+        text-decoration: none;
+        font-size: 1.6rem;
+        color: #55c57a;
+        display: inline-block;
+        padding: 3px;
+        border-bottom: 1px solid #55c57a;
+        transition: all .2s; }
+      
+      .btn-text:hover {
+        background-color: #55c57a;
+        color: #fff;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px); }
+      
+      .btn-text:active {
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+        transform: translateY(0); }
+      
+      .composition {
+        position: relative; }
+        .composition__photo {
+          width: 55%;
+          box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
+          border-radius: 2px;
+          position: absolute;
+          z-index: 0;
+          transition: all .2s; }
+          .composition__photo--p1 {
+            left: 0;
+            top: -2rem; }
+          .composition__photo--p2 {
+            right: 0;
+            top: 2rem; }
+          .composition__photo--p3 {
+            left: 20%;
+            top: 10rem; }
+          .composition__photo:hover {
+            transform: scale(1.05) translateY(-0.5rem);
+            box-shadow: 0 2.5rem 4rem rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            outline: 1.5rem solid #55c57a;
+            outline-offset: 2rem; }
+        .composition:hover .composition__photo:not(:hover) {
+          transform: scale(0.95); }
+      
+      .feature-box {
+        background-color: rgba(255, 255, 255, 0.8);
+        font-size: 1.5rem;
+        padding: 2.5rem;
+        text-align: center;
+        border-radius: 3px;
+        box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+        transition: all .2s; }
+        .feature-box__icon {
+          font-size: 6rem;
+          margin-bottom: 4rem;
+          background-image: linear-gradient(to right, #7ed56f, #28b485);
+          -webkit-background-clip: text;
+          color: transparent; }
+        .feature-box:hover {
+          transform: translateY(-1.5rem);
+          box-shadow: 0 2.5rem 4rem rgba(0, 0, 0, 0.4); }
+      
+      .card {
+        perspective: 150rem;
+        position: relative;
+        height: 52rem; }
+        .card__side {
+          width: 100%;
+          height: 52rem;
+          position: absolute;
+          top: 0;
+          left: 0;
+          transition: all .8s ease;
+          backface-visibility: hidden;
+          box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+          /* border-radius: 30px; */
+          overflow: hidden; }
+          .card__side--front {
+            background-color: #fff; }
+          .card__side--back {
+            transform: rotateY(-180deg); }
+            .card__side--back-1 {
+              background-image: linear-gradient(to right bottom, #ffb900, #ff7730); }
+            .card__side--back-2 {
+              background-image: linear-gradient(to right bottom, #7ed56f, #28b485); }
+            .card__side--back-3 {
+              background-image: linear-gradient(to right bottom, #2998ff, #5643fa); }
+        .card:hover .card__side--front {
+          transform: rotateY(180deg); }
+        .card:hover .card__side--back {
+          transform: rotateY(0deg); }
+        .card__picture {
+          background-size: cover;
+          height: 44%;
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+          background-blend-mode: color; }
+          .card__picture--1 {
+            background-image: linear-gradient(to right bottom, #ffb900, #ff7730), url(/img/nat-5.jpg); }
+          .card__picture--2 {
+            background-image: linear-gradient(to right bottom, #7ed56f, #28b485), url(/img/nat-6.jpg); }
+          .card__picture--3 {
+            background-image: linear-gradient(to right bottom, #2998ff, #5643fa), url(/img/nat-7.jpg); }
+        .card__heading {
+          font-size: 2.8rem;
+          font-weight: 300;
+          text-transform: uppercase;
+          text-align: right;
+          position: absolute;
+          right: 2rem;
+          top: 12rem;
+          color: #fff;
+          width: 75%; }
+        .card__heading-span {
+          padding: 1rem 1.5rem;
+          -webkit-box-decoration-break: clone; }
+          .card__heading-span--1 {
+            background-image: linear-gradient(to right bottom, rgba(255, 185, 0, 0.85), rgba(255, 119, 48, 0.85)); }
+          .card__heading-span--2 {
+            background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.85), rgba(40, 180, 133, 0.85)); }
+          .card__heading-span--3 {
+            background-image: linear-gradient(to right bottom, rgba(41, 152, 255, 0.85), rgba(86, 67, 250, 0.85)); }
+        .card__details {
+          padding: 3rem; }
+          .card__details ul {
+            list-style: none;
+            width: 80%;
+            margin: 0 auto; }
+            .card__details ul li {
+              text-align: center;
+              font-size: 1.5rem;
+              padding: 1rem; }
+              .card__details ul li:not(:last-child) {
+                border-bottom: 1px solid #eee; }
+        .card__cta {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 90%;
+          text-align: center; }
+        .card__price-box {
+          color: #fff;
+          margin-bottom: 8rem; }
+        .card__price-only {
+          font-size: 1.4rem;
+          text-transform: uppercase; }
+        .card__price-value {
+          font-weight: 100;
+          font-size: 8rem; }
+      
+      .story {
+        background-color: rgba(255, 255, 255, 0.7);
+        width: 75%;
+        padding: 6rem;
+        padding-left: 9rem;
+        margin: 0 auto;
+        box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        font-size: 1.6rem;
+        transform: skewx(-12deg); }
+        .story > * {
+          transform: skewx(12deg); }
+        .story__shape {
+          float: left;
+          height: 15rem;
+          width: 15rem;
+          shape-outside: circle(50% at 50% 50%);
+          clip-path: circle(50% at 50% 50%);
+          margin-right: 3rem;
+          overflow: hidden;
+          position: relative;
+          transition: all .5s;
+          backface-visibility: hidden; }
+        .story__img {
+          height: 100%;
+          transition: inherit;
+          transform: translateX(-4rem) scale(1.4);
+          backface-visibility: inherit; }
+        .story__caption {
+          text-align: center;
+          line-height: 1.5;
+          color: #f7f7f7;
+          font-weight: 500;
+          font-size: 2rem;
+          position: absolute;
+          top: 10rem;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          transition: inherit;
+          opacity: 0;
+          backface-visibility: inherit; }
+        .story:hover .story__shape .story__caption {
+          top: 50%;
+          opacity: 1; }
+        .story:hover .story__shape .story__img {
+          filter: blur(3px) brightness(80%);
+          transform: translateX(-4rem) scale(1); }
+      
+      .background-vid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: -1;
+        opacity: .15; }
+        .background-vid__content {
+          height: 100%;
+          width: 100%;
+          object-fit: cover; }
+      
+      .form__group:not(:last-child) {
+        margin-bottom: 2rem; }
+      
+      .form__input {
+        font-size: 1.5rem;
+        font-family: inherit;
+        color: inherit;
+        padding: 1.5rem 2rem;
+        border-radius: 2px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: none;
+        display: block;
+        width: 90%;
+        border-bottom: 3px solid transparent;
+        transition: all .3s; }
+        .form__input:focus {
+          outline: none;
+          box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+          border-bottom: 3px solid #55c57a; }
+        .form__input::-webkit-input-placeholder {
+          color: #999; }
+        .form__input:invalid {
+          border-bottom: 3px solid #ff7730; }
+      
+      .form__lable {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-left: 2rem;
+        margin-top: .7rem;
+        display: block;
+        transition: all .3s; }
+      
+      .form__input:placeholder-shown + .form__lable {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4rem); }
+      
+      .form__radio-group {
+        width: 49%;
+        display: inline-block; }
+      
+      .form__radio-input {
+        display: none; }
+      
+      .form__radio-label {
+        font-size: 1.6rem;
+        cursor: pointer;
+        position: relative;
+        padding-left: 4.5rem; }
+      
+      .form__radio-button {
+        height: 3rem;
+        width: 3rem;
+        border: 5px solid #55c57a;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: -.4rem; }
+        .form__radio-button::after {
+          content: " ";
+          display: block;
+          height: 1.3rem;
+          width: 1.3rem;
+          border-radius: 50%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: #55c57a;
+          opacity: 0;
+          transition: opacity .2s; }
+      
+      .form__radio-input:checked + .form__radio-label .form__radio-button::after {
+        opacity: 1; }
+      
+      .header {
+        height: 95vh;
+        /* we always use vh to better tech.s */
+        /*  
+          background-image: first , second;
+          then the image of the first will be upper the second 
+          and to make the second appear partly u should change the opacity of the first 
+          */
+        background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url("../img/hero-small.jpg");
+        background-size: cover;
+        background-position: top;
+        /* cover the elemnt even if it cut itself but with this prop it will make periority to part of 
+           the image {top or center of bottom }*/
+        clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+        /* new prop to determine what part to be visible ( top l,top r ,bottom r ,bottom)
+           u can use coordinates from clip-path maker */
+        position: relative; }
+        .header .logo-box {
+          position: absolute;
+          top: 4rem;
+          left: 4rem; }
+          .header .logo-box .logo {
+            height: 3.5rem;
+            /* u can just determine the height and the compiler will relative the width to the actual width  */ }
+        .header .text-box {
+          position: absolute;
+          top: 40%;
+          /* we dont make it exatly at the middle */
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center; }
+      .somePadding{
+        margin-bottom: 20px;
+      }
+      .Row {
+        max-width: 114rem;
+        margin: 100px auto;
+        /* 
+          [class^="cal-"] {
+              background-color: orangered;
+              float: left;
+              &:not(:last-child){
+                  margin-right:$gutter-horizontal ;
+              }
+          }
+          */ }
+        .Row:not(:last-child) {
+          margin-bottom: 8rem; }
+        .Row:after {
+          content: "";
+          display: table;
+          clear: both; }
+        .Row .cal-1-of-2 {
+          width: calc((100% - ( 1 * 6rem))/ 2);
+          float: left; }
+          .Row .cal-1-of-2:not(:last-child) {
+            margin-right: 6rem; }
+        .Row .cal-1-of-3 {
+          width: calc((100% - ( 2 * 6rem))/ 3);
+          float: left; }
+          .Row .cal-1-of-3:not(:last-child) {
+            margin-right: 6rem; }
+        .Row .cal-1-of-4 {
+          width: calc((100% - ( 3 * 6rem))/ 4);
+          float: left; }
+          .Row .cal-1-of-4:not(:last-child) {
+            margin-right: 6rem; }
+        .Row .cal-2-of-3 {
+          width: calc((100% - ( 1 * 6rem))/ 4);
+          float: left;
+          width: calc(100% - ((100% - ( 2 * 6rem)) / 3 + 6rem)); }
+          .Row .cal-2-of-3:not(:last-child) {
+            margin-right: 6rem; }
+        .Row .cal-2-of-4 {
+          width: calc((100% - ( 1 * 6rem))/ 2);
+          float: left; }
+          .Row .cal-2-of-4:not(:last-child) {
+            margin-right: 6rem; }
+        .Row .cal-3-of-4 {
+          width: calc((100% - ( 1 * 6rem))/ 1.281);
+          float: left;
+          width: calc(100% - ((100% - ( 3 * 6rem)) / 4 + 6rem)); }
+          .Row .cal-3-of-4:not(:last-child) {
+            margin-right: 6rem; }
+      
+      /* the spicifity of the styling in css   */
+      /* the hover or the psuedo element must have more spicifty {i do an example in template one project} */
+      /* use rem instead of px */
+      /* use BEm technique */
+      /* 
+      BEM tech 
+      section__element 
+      section__element--modifier
+      header__tool-box
+      header__btn--red
+      header__btn--black
+      */
+      /*  */
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      .container {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      /* Small */
+      @media (min-width: 768px) {
+        .container {
+          width: 750px;
+        }
+      }
+      /* Medium */
+      @media (min-width: 992px) {
+        .container {
+          width: 970px;
+        }
+      }
+      /* Large */
+      @media (min-width: 1200px) {
+        .container {
+          width: 1170px;
+        }
+      }
+      
+      
+      
+      .special-heading {
+        color: #ebeced;
+        font-size: 100px;
+        text-align: center;
+        font-weight: 800;
+        letter-spacing: -3px;
+        margin: 0;
+      }
+      .special-heading + p {
+        text-align: center;
+        margin: -30px 0 0;
+        font-size: 20px;
+        color: #797979;
+      }
+      @media (max-width:767px) {
+       .special-heading {
+        font-size: 60px;
+       } 
+       .special-heading + p {
+        margin: -20px 0 0;
+       }
+      }
+      
+      
+      
+      
+      
+      /* start contact */
+      .contact {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        background-color: #f6f6f6;
+        text-align: center;
+      }
+      .contact .container .special-heading {
+        color: #c7c7c7;
+      }
+      .contact .container .text {
+        padding: 60px 0;
+      }
+      .contact .container .text p {
+        color: #28b485;
+        font-size: 35px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        margin-bottom: 15px;
+      }
+      .contact .container .text a {
+        color: #28b485;
+        font-size: 35px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+      .contact .container .text .social {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        font-size: 16px;
+      }
+      .contact .container .text .social i {
+        margin-left: 10px;
+        color: #28b485;
+      
+      }
+      @media (max-width:767px) {
+        .contact .container .text a ,
+        .contact .container .text p {
+          font-size: 25px;
+        }
+        .contact .container .text .social {
+          font-size: 12px;
+        }
+      
+      }
+      
+      
+      
+      
+      
+      /* end contact */
+      /* Start Footer */
+      .footer {
+        background-color: #28b485;
+        color: white;
+        padding: 30px 10px;
+        text-align: center;
+        font-size: 18px;
+      }
+      .footer span {
+        font-weight: bold;
+        color: #5643fa;
+      }
+      /* End Footer */
+      
+      
