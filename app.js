@@ -26,7 +26,7 @@ app.use(method("_method"));
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: 'qqqq1111',//passwordchanges
+  password: 'bogo',//passwordchanges
   database: "mydb",
 });
 // connection.query("SELECT * FROM catsonhill ", function (err, results, fields) {
@@ -35,9 +35,23 @@ const connection = mysql.createConnection({
 //   // console.log(fields); // fields contains extra meta data about results, if available
 // });
 // handling users http requests
+app.use("/places", async (req, res) => {
+  console.log(req.body)
+   connection.query('SELECT * FROM place  as p, city as c where p.longitude = c.longitude AND p.latitude = c.latitude', //, natureReserve as n, topography as t 
+   (error, results) => {
+    if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+     });
+  res.render("pages/places");
+});
 app.use("/places/insertCity", async (req, res) => {
   res.render("pages/insertCity");
 });
+app.use("/places/insertNatureReserve", async (req, res) => {
+  res.render("pages/insertNatureReserve");
+});
+
 app.post("/places",async (req, res) => {
   console.log(req.body)
    connection.query('INSERT INTO place (longitude, latitude, name, country_name) VALUES (?,?,?,?)', [req.body.longitude, req.body.latitude, req.body.name, req.body.country_name],
@@ -47,6 +61,13 @@ app.post("/places",async (req, res) => {
       //console.log(fields); // fields contains extra meta data about results,
      });
    connection.query('INSERT INTO city (place_longitude, place_latitude, religion, history, population) VALUES (?,?,?,?,?)', [req.body.longitude, req.body.latitude, req.body.religion, req.body.history, req.body.population],
+  (error, results) => {
+    if (error) throw error;
+      console.log(error)
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+     });
+     connection.query('INSERT INTO placePhotos (place_longitude, place_latitude, photoURL) VALUES (?,?,?)', [req.body.longitude, req.body.latitude, req.body.photoURL],
   (error, results) => {
     if (error) throw error;
       console.log(error)
