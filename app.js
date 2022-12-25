@@ -9,7 +9,7 @@ const app = express();
 const path = require("path");
 const method = require("method-override");
 const mysql = require("mysql2");
-
+const controller = require("./queries/controller")
 app.engine("ejs", ejsMate); //to include the headers and the partial templates
 
 //ejs setup and getting ejs files from the views directory
@@ -30,17 +30,25 @@ const connection = mysql.createConnection({
   database: "mydb",
 });
 app.get("/places", async (req, res) => {
-  console.log(req.body)
-   connection.query('SELECT longitude,latitude,`name`,`history`,population,religion FROM place INNER JOIN city ON longitude = place_longitude AND latitude = place_latitude;', //, returns an object arrys 
-   (error, results) => {
-    if (error) throw error;
+  //onsole.log(req.body)
+  connection.query(
+    controller.selectCitiesWithPhotos,
+    async(error, results) => {
+      if (error) throw error;
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
-     });
-  res.render("pages/Trips");
+      const cities = results;
+      res.render("pages/places",{cities});
+    });
 });
 app.get("/places/insertCity", async (req, res) => {
   res.render("pages/insertCity");
+});
+app.get("/trips", async (req, res) => {
+  res.render("pages/Trips");
+});
+app.get("/dad", async (req, res) => {
+  res.render("pages/insertCreature");
 });
 app.get("/places/insertNatureReserve", async (req, res) => {
   res.render("pages/insertNatureReserve");
@@ -50,26 +58,9 @@ app.get("/places/insertTopography", async (req, res) => {
 });
 
 app.post("/places",async (req, res) => {
-   connection.query('INSERT INTO place (longitude, latitude, `name`, country_name) VALUES (?,?,?,?)', [req.body.longitude, req.body.latitude, req.body.name, req.body.country_name],
-   (error, results) => {
-    if (error) throw error;
-      console.log(results); // results contains rows returned by server
-      //console.log(fields); // fields contains extra meta data about results,
-     });
-   connection.query('INSERT INTO city (place_longitude, place_latitude, religion, `history`, population) VALUES (?,?,?,?,?)', [req.body.longitude, req.body.latitude, req.body.religion, req.body.history, req.body.population],
-  (error, results) => {
-    if (error) throw error;
-      console.log(error)
-      console.log(results); // results contains rows returned by server
-      //console.log(fields); // fields contains extra meta data about results,
-     });
-     connection.query('INSERT INTO placePhotos (place_longitude, place_latitude, photoURL) VALUES (?,?,?)', [req.body.longitude, req.body.latitude, req.body.photoURL],
-  (error, results) => {
-    if (error) throw error;
-      console.log(error)
-      console.log(results); // results contains rows returned by server
-      //console.log(fields); // fields contains extra meta data about results,
-     });
+controller.insertPlace(req);
+controller.insertCity(req);
+controller.insertPlacePhoto(req);
      res.redirect('/places');
  });
 
