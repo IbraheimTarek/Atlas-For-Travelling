@@ -3,7 +3,7 @@ const mysql = require("mysql2");
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "qqqq1111", //passwordchanges
+  password: "bogo", //passwordchanges
   database: "mydb",
 });
 
@@ -110,7 +110,7 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       req.body.userName,
       req.body.email,
       req.body.password,
-      req.body.wallet,
+      0,
       req.body.userType,
     ],
     async(error, results) => {
