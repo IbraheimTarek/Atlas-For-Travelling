@@ -70,6 +70,9 @@ app.get("/insertHotel", async (req, res) => {
 app.get("/insertTrip", async (req, res) => {
   res.render("pages/insertTrip");
 });
+app.get("/register", async (req, res) => {
+  res.render("pages/register");
+});
  app.get("/trips", async (req, res) => {
   res.render("pages/Trips");
 });
