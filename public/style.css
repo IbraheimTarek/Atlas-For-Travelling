@@ -36,35 +36,6 @@ he says that the normalize that elzero said  is no more necessary
 
 
 
-.logo {
-  height: 5rem;
-  /* u can just determine the height and the compiler will relative the width to the actual width  */ }
-.leftt{
-  margin-left: -2rem;
-}
-.white_text{
-  color:white;
-}
-
-nav {
-  font-size: 2rem;
-}
-
-
-
-.atllas{
-  font-size: 2rem;
-  margin-bottom: -1rem;
-}
-
-
-
-
-nav input {
-  font-size: 2rem;
-}
-
-
 
 *,
 *::after,
