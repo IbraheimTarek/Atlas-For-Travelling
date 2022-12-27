@@ -127,80 +127,21 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       //console.log(fields); // fields contains extra meta data about results,
     }
   );
+  module.exports.insertBus = (req, res, next) =>
+  connection.query(
+    "INSERT INTO bus  (id, agency,capacity)  VALUES (?,?,?) ",
+    [
+      req.body.id,
+      req.body.agency,
+      req.body.capacity,
+    ],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(error);
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
   
-  module.exports.insertUserExplorer = (req, res, next) =>
-  connection.query(
-    "INSERT INTO user (userName,email, password,wallet,userType)  VALUES (?,?,?,?,?) ",
-    [
-      req.body.userName,
-      req.body.email,
-      req.body.password,
-      0,
-      req.body.userType,
-    ],
-    async(error, results) => {
-      if (error) throw error;
-      console.log(results);
 
-      connection.query(
-        `select id from \`user\` where userName =\'${req.body.userName}\'`,
-        async(error, results) => {
-          if (error) throw error;
-          console.log(results);
-
-          connection.query(
-            `INSERT INTO explorer (user_id,bio)  VALUES (${results[0].id},?) `,
-            [
-              req.body.bio
-            ],
-            async(error, results) => {
-              if (error) throw error;
-              console.log(results); // results contains rows returned by server
-              //console.log(fields); // fields contains extra meta data about results,
-            }
-          );
-          
-        }
-      );
-
-    }
-  );
-
-  module.exports.insertUserCompany = (req, res, next) =>
-  connection.query(
-    "INSERT INTO user (userName,email, password,wallet,userType)  VALUES (?,?,?,?,?) ",
-    [
-      req.body.userName,
-      req.body.email,
-      req.body.password,
-      0,
-      req.body.userType,
-    ],
-    async(error, results) => {
-      if (error) throw error;
-      console.log(results);
-
-      connection.query(
-        `select id from \`user\` where userName =\'${req.body.userName}\'`,
-        async(error, results) => {
-          if (error) throw error;
-          console.log(results);
-
-          connection.query(
-            `INSERT INTO company (user_id,companyName,bio)  VALUES (${results[0].id},?,?) `,
-            [
-              req.body.companyName,
-              req.body.bio
-            ],
-            async(error, results) => {
-              if (error) throw error;
-              console.log(results); // results contains rows returned by server
-              //console.log(fields); // fields contains extra meta data about results,
-            }
-          );
-          
-        }
-      );
-
-    }
-  );
+ 
