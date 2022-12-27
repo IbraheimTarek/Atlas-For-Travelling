@@ -27,7 +27,7 @@ app.use(method("_method"));
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: 'bogo',//passwordchanges
+  password: 'qqqq1111',//passwordchanges
   database: "mydb",
 });
 
