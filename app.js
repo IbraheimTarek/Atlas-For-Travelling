@@ -50,8 +50,8 @@ app.get("/places", async (req, res) => {
       if (error) throw error;
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
-      const cities = results;
-      res.render("pages/places",{cities});
+      const places = results;
+      res.render("pages/places",{places});
     });
 });
 app.post("/places",async (req, res) => {
