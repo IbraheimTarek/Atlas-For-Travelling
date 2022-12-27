@@ -30,6 +30,42 @@
 he says that the normalize that elzero said  is no more necessary 
 */
 /* * only specify all the normal elments not the psuedo elements too so we have to add *::after and *::before  */
+
+
+
+
+
+
+.logo {
+  height: 5rem;
+  /* u can just determine the height and the compiler will relative the width to the actual width  */ }
+.leftt{
+  margin-left: -2rem;
+}
+.white_text{
+  color:white;
+}
+
+nav {
+  font-size: 2rem;
+}
+
+
+
+.atllas{
+  font-size: 2rem;
+  margin-bottom: -1rem;
+}
+
+
+
+
+nav input {
+  font-size: 2rem;
+}
+
+
+
 *,
 *::after,
 *::before {
@@ -169,7 +205,7 @@ body {
     width: 50%;
     padding: 6rem; }
 
-.btn:link, .btn:visited {
+.btn1:link, .btn1:visited {
   /* we want the visited state to be the same as the link state
         so we dont have purpul link after visiting this link
       */
@@ -183,37 +219,37 @@ body {
   /*all to apply all the trans prop.s ......and it must be in the initial element case   */
   position: relative; }
 
-.btn:hover {
+.btn1:hover {
   transform: translateY(-0.3rem);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
-  .btn:hover::after {
-    /* when we hover the btn i want the after to be the following  */
+  .btn1:hover::after {
+    /* when we hover the btn1 i want the after to be the following  */
     transform: scaleX(1.4) scaleY(1.6);
     opacity: 0; }
 
-.btn:active {
+.btn1:active {
   /*active is once the element been clicked  */
   transform: translateY(-0.1rem);
-  /* this will make the btn goes down  */
+  /* this will make the btn1 goes down  */
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); }
 
-.btn--white {
+.btn1--white {
   color: #777;
   background-color: #fff; }
-  .btn--white::after {
+  .btn1--white::after {
     background-color: #fff; }
 
-.btn--green {
+.btn1--green {
   color: #fff;
   background-color: #55c57a; }
-  .btn--green::after {
+  .btn1--green::after {
     background-color: #55c57a; }
 
-.btn::after {
+.btn1::after {
   /* to make after appear u must use both display and content */
   content: "";
   display: inline-block;
-  /* after is child to .btn */
+  /* after is child to .btn1 */
   height: 100%;
   width: 100%;
   border-radius: 10rem;
@@ -223,12 +259,12 @@ body {
   z-index: -1;
   transition: all 0.4s; }
 
-.btn-animated {
+.btn1-animated {
   animation: ToUpp .5s ease-out 0.75s;
   animation-fill-mode: backwards;
   /*that return the animation back to before 0% frame or to the ......read in css file   */ }
 
-.btn-text:visited, .btn-text:link {
+.btn1-text:visited, .btn1-text:link {
   text-decoration: none;
   font-size: 1.6rem;
   color: #55c57a;
@@ -237,13 +273,13 @@ body {
   border-bottom: 1px solid #55c57a;
   transition: all .2s; }
 
-.btn-text:hover {
+.btn1-text:hover {
   background-color: #55c57a;
   color: #fff;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
   transform: translateY(-2px); }
 
-.btn-text:active {
+.btn1-text:active {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
   transform: translateY(0); }
 
@@ -608,8 +644,8 @@ BEM tech
 section__element 
 section__element--modifier
 header__tool-box
-header__btn--red
-header__btn--black
+header__btn1--red
+header__btn1--black
 */
 /*  */
 
