@@ -50,8 +50,8 @@ app.get("/places", async (req, res) => {
       if (error) throw error;
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
-      const cities = results;
-      res.render("pages/places",{cities});
+      const places = results;
+      res.render("pages/places",{places});
     });
 });
 app.post("/places",async (req, res) => {
@@ -72,6 +72,9 @@ app.get("/insertTrip", async (req, res) => {
 });
 app.get("/register", async (req, res) => {
   res.render("pages/register");
+});
+app.get("/login", async (req, res) => {
+  res.render("pages/login");
 });
  app.get("/trips", async (req, res) => {
   res.render("pages/Trips");
