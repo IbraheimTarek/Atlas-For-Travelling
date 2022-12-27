@@ -12,6 +12,7 @@ const method = require("method-override");
 const mysql = require("mysql2");
 const controller = require("./queries/controller");
 const { render } = require("ejs");
+const e = require("express");
 app.engine("ejs", ejsMate); //to include the headers and the partial templates
 
 //ejs setup and getting ejs files from the views directory
@@ -43,6 +44,19 @@ app.get("/places/insertNatureReserve", async (req, res) => {
 app.get("/places/insertTopography", async (req, res) => {
   res.render("pages/insertTopography");
 });
+app.get("/places/:longitude&:latitude", async (req, res, next) => {
+  console.log(req.params);
+  connection.query(
+    controller.selectPlace(req.params.longitude, req.params.latitude),
+    async (error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+      const place = results;
+      res.render("pages/place", { place });
+    }
+  );
+});
 app.get("/places", async (req, res) => {
   //onsole.log(req.body)
   connection.query(
@@ -57,19 +71,7 @@ app.get("/places", async (req, res) => {
   );
 });
 
-app.get("/places/:longitude&:latitude", async (req, res, next) => {
-  console.log(req.params);
-  connection.query(
-    controller.selectPlace(req.params.longitude, req.params.latitude),
-    async (error, results) => {
-      if (error) throw error;
-      console.log(results); // results contains rows returned by server
-      //console.log(fields); // fields contains extra meta data about results,
-      const place = results;
-      res.render("pages/place", { place });
-    }
-  );
-});
+
 app.post("/places", async (req, res) => {
   console.log(req.body);
   controller.insertPlace(req);
@@ -83,6 +85,18 @@ app.post("/places", async (req, res) => {
   controller.insertPlacePhoto(req);
   res.redirect("/places");
 });
+
+app.post("/register", async (req, res) => {
+  console.log(req.body);
+  if(req.body.userType == 0){
+    controller.insertUserExplorer(req);
+  }else if(req.body.userType == 1){
+    controller.insertUserCompany(req)
+  }
+  res.redirect("/");
+});
+
+
 app.get("/insertCreature", async (req, res) => {
   res.render("pages/insertCreature");
 });
@@ -92,8 +106,11 @@ app.get("/insertHotel", async (req, res) => {
 app.get("/insertTrip", async (req, res) => {
   res.render("pages/insertTrip");
 });
-app.get("/register", async (req, res) => {
-  res.render("pages/register");
+app.get("/registerforexpolerers", async (req, res) => {
+  res.render("pages/registerExplorer");
+});
+app.get("/registerforcompany", async (req, res) => {
+  res.render("pages/registerCompany");
 });
 app.get("/login", async (req, res) => {
   res.render("pages/login");
@@ -107,9 +124,7 @@ app.get("/trips", async (req, res) => {
  app.get("/CompanyProfile", async (req, res) => {
   res.render("pages/CompanyProfile");
 });
-app.get("/insertUser", async (req, res) => {
-  res.render("pages/insertUser");
-});
+
 app.use("/", async (req, res) => {
   res.render("pages/home");
 });

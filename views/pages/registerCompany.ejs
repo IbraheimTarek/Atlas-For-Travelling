@@ -1,7 +1,8 @@
 <% layout("boilerplate") %>
 
 <div class="container mt-5 mb-5">
-  <form>
+  <form action="/register"
+    method="post">
     <div class=" row justify-content-center">
     <div class="col-5 card p-5  ">
       <div class="row mb-3">
@@ -31,6 +32,15 @@
           id="exampleInputPassword1"
         />
       </div>
+      <div class="row mb-3">
+        <label for="companyName" class="form-label">Company Name</label>
+        <input name="companyName" type="text" class="form-control" id="companyName" >
+      </div>
+      <div class="mb-3">
+        <label for="bio" class="form-label">Bio</label>
+        <textarea name="bio" class="form-control" id="bio" rows="3"></textarea>
+      </div>
+      <input type="hidden" id="userType" name="userType" value="1">
       <button type="submit" class="btn btn-primary row-auto">Submit</button>
     </div>
   </div>
