@@ -83,6 +83,20 @@ app.post("/places", async (req, res) => {
   controller.insertPlacePhoto(req);
   res.redirect("/places");
 });
+
+
+
+app.post("/Bus", async (req, res) => {
+  console.log(req.body);
+  controller.insertBus(req);
+  res.redirect("/Bus");
+});
+
+
+
+
+
+
 app.get("/insertCreature", async (req, res) => {
   res.render("pages/insertCreature");
 });
@@ -107,8 +121,14 @@ app.get("/trips", async (req, res) => {
  app.get("/CompanyProfile", async (req, res) => {
   res.render("pages/CompanyProfile");
 });
+ app.get("/AdminProfile", async (req, res) => {
+  res.render("pages/AdminProfile");
+});
 app.get("/insertUser", async (req, res) => {
   res.render("pages/insertUser");
+});
+app.get("/insertBus", async (req, res) => {
+  res.render("pages/insertBus");
 });
 app.use("/", async (req, res) => {
   res.render("pages/home");

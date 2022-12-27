@@ -120,6 +120,21 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       //console.log(fields); // fields contains extra meta data about results,
     }
   );
+  module.exports.insertBus = (req, res, next) =>
+  connection.query(
+    "INSERT INTO bus  (id, agency,capacity)  VALUES (?,?,?) ",
+    [
+      req.body.id,
+      req.body.agency,
+      req.body.capacity,
+    ],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(error);
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
   
 
- ;
+ 
