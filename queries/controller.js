@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
   "SELECT longitude,latitude,`name`,`history`,population,religion FROM place INNER JOIN city ON longitude = place_longitude AND latitude = place_latitude;", //, returns an object arrys
 
   module.exports.selectAllPlacesWithPhotos =  
-  "select longitude,latitude,`name`, country_name,photoURL from place,city as c,placePhotos as p where longitude = c.place_longitude AND latitude = c.place_latitude and longitude = p.place_longitude AND latitude = p.place_latitude";
+  "select longitude,latitude,`name`, country_name,photoURL from place,placePhotos as p where longitude = p.place_longitude AND latitude = p.place_latitude";
 
   module.exports.selectCitiesWithPhotos =  
   "select longitude,latitude,`name`,`history`,population,religion,photoURL from place,city as c,placePhotos as p where longitude = c.place_longitude AND latitude = c.place_latitude and longitude = p.place_longitude AND latitude = p.place_latitude";
@@ -75,7 +75,7 @@ module.exports.insertNatureReserve = (req, res, next) =>
   );
   module.exports.insertTopography = (req, res, next) =>
   connection.query(
-    "INSERT INTO natureReserve (place_longitude, place_latitude, landType, discription) VALUES (?,?,?,?)",
+    "INSERT INTO topography (place_longitude, place_latitude, landType, discription) VALUES (?,?,?,?)",
     [
       req.body.longitude,
       req.body.latitude,

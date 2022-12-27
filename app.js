@@ -19,13 +19,13 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // getting styles and js frontend files from the public dirctory
-app.use(express.static(path.join(__dirname, "public"))); 
+app.use(express.static(path.join(__dirname, "public")));
 //app.use("/public", express.static(path.join(__dirname, "public")));  // i've edit this line hema to connect my css files
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(method("_method"));
 
-//database connection infromation  
+//database connection infromation
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -37,7 +37,6 @@ app.get("/places/insertCity", async (req, res) => {
   res.render("pages/insertCity");
 });
 
-
 app.get("/places/insertNatureReserve", async (req, res) => {
   res.render("pages/insertNatureReserve");
 });
@@ -48,44 +47,43 @@ app.get("/places", async (req, res) => {
   //onsole.log(req.body)
   connection.query(
     controller.selectAllPlacesWithPhotos,
-    async(error, results) => {
+    async (error, results) => {
       if (error) throw error;
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
       const places = results;
-      res.render("pages/places",{places});
-    });
+      res.render("pages/places", { places });
+    }
+  );
 });
 
-app.get("/places/:longitude&:latitude", async (req, res,next) => {
+app.get("/places/:longitude&:latitude", async (req, res, next) => {
   console.log(req.params);
   connection.query(
-    controller.selectPlace(req.params.longitude,req.params.latitude),
-    async(error, results) => {
+    controller.selectPlace(req.params.longitude, req.params.latitude),
+    async (error, results) => {
       if (error) throw error;
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
       const place = results;
-      res.render("pages/place",{place});
-    });
-  });
-  app.post("/places",async (req, res) => {
+      res.render("pages/place", { place });
+    }
+  );
+});
+app.post("/places", async (req, res) => {
   console.log(req.body);
-controller.insertPlace(req);
-controller.insertCity(req);
-controller.insertPlacePhoto(req);
-     res.redirect('/places');
- });
-
- 
-  app.post("/User",async (req, res) => {
-  console.log(req.body);
-controller.insertUser(req);
-     res.redirect('/User');
- });
-
-
- app.get("/insertCreature", async (req, res) => {
+  controller.insertPlace(req);
+  if (req.placeType == 0) {
+    controller.insertCity(req);
+  } else if (req.placeType == 1) {
+    controller.insertNatureReserve(req);
+  } else if (req.placeType == 2){
+    controller.insertTopography(req);
+  }
+  controller.insertPlacePhoto(req);
+  res.redirect("/places");
+});
+app.get("/insertCreature", async (req, res) => {
   res.render("pages/insertCreature");
 });
 app.get("/insertHotel", async (req, res) => {
@@ -100,7 +98,7 @@ app.get("/register", async (req, res) => {
 app.get("/login", async (req, res) => {
   res.render("pages/login");
 });
- app.get("/trips", async (req, res) => {
+app.get("/trips", async (req, res) => {
   res.render("pages/Trips");
 });
  app.get("/Profile", async (req, res) => {
@@ -124,5 +122,3 @@ app.all("*", (req, res, next) => {
 app.listen(3000, () => {
   console.log("Serving on port 3000");
 });
-
-

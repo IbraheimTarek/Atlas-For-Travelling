@@ -1,27 +1,47 @@
 <% layout("boilerplate") %>
 
 <div class="container">
-    <!-- Card deck -->
+  <!-- Card deck -->
 
-      <div class="card">
-
-        <!--Card image-->
-        <div class="view overlay">
-          <img class="card-img-top" src="<%=place[0].photoURL%> " alt="Card image cap">
-          <a href="#!">
-            <div class="mask rgba-white-slight"></div>
-          </a>
-        </div>
-
-        <!--Card content-->
-        <div class="card-body">
-
-          <!--Title-->
-          <h4 class="card-title"><%=place[0].name %> </h4>
-          <!--Text-->
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-          <button type="button" class="btn btn-success btn-insert" style="font-size: 14px;">Read more</button>
-
-
+  <div class="card">
+    <!--Card image-->
+    <div class="view overlay">
+      <img
+        class="card-img-top"
+        src="<%=place[0].photoURL%> "
+        alt="Card image cap"
+      />
+      <a href="#!">
+        <div class="mask rgba-white-slight"></div>
+      </a>
     </div>
+
+    <!--Card content-->
+    <div class="card-body">
+      <!--Title-->
+      <h2 class="card-title"><%=place[0].name %></h2>
+      <!--Text-->
+      <% if(place[0].placeType == 0) {%>
+      <h5> History</h5>
+      <p class="card-text"><%= place[0].history%></p>
+      <h8><b> Religion: </b><%= place[0].religion%></h8>
+      <% } else if(place[0].placeType == 1){ %> <!-- Nature Reserve -->
+        <h5> Discription</h5>
+        <p class="card-text"><%= place[0].reserveDiscription%></p>
+        <h8><b> Reserve Type: </b><%= place[0].reserveType%></h8>
+      <% } else if(place[0].placeType == 2){  %> <!-- Topography -->
+        <h5> Discription</h5>
+        <p class="card-text"><%= place[0].topoDiscription%></p>
+        <h8><b> Land Type: </b><%= place[0].landType%></h8>
+      <% } %>
+      <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+      <button
+        type="button"
+        class="btn btn-success btn-insert"
+        style="font-size: 14px"
+      >
+        Read more
+      </button>
+    </div>
+  </div>
+</div>
