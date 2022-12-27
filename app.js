@@ -5,11 +5,13 @@ if (process.env.NODE_ENV != "production") {
 //icludeing the api's and libiraries
 const express = require("express");
 const ejsMate = require("ejs-mate");
+const ExpressErrors = require("./utlis/ExpressErrors");
 const app = express();
 const path = require("path");
 const method = require("method-override");
 const mysql = require("mysql2");
-const controller = require("./queries/controller")
+const controller = require("./queries/controller");
+const { render } = require("ejs");
 app.engine("ejs", ejsMate); //to include the headers and the partial templates
 
 //ejs setup and getting ejs files from the views directory
@@ -27,7 +29,7 @@ app.use(method("_method"));
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: 'qqqq1111',//passwordchanges
+  password: 'bogo',//passwordchanges
   database: "mydb",
 });
 
@@ -45,7 +47,7 @@ app.get("/places/insertTopography", async (req, res) => {
 app.get("/places", async (req, res) => {
   //onsole.log(req.body)
   connection.query(
-    controller.selectAllPlacesWithPhotos,
+    controller.selectPlace,
     async(error, results) => {
       if (error) throw error;
       console.log(results); // results contains rows returned by server
@@ -54,11 +56,16 @@ app.get("/places", async (req, res) => {
       res.render("pages/places",{places});
     });
 });
+
+app.get("/places/:longitude&:latitude", async (req, res,next) => {
+  console.log(req.params);
+  res.render("pages/place");
+});
 app.post("/places",async (req, res) => {
   console.log(req.body);
-// controller.insertPlace(req);
-// controller.insertCity(req);
-// controller.insertPlacePhoto(req);
+controller.insertPlace(req);
+controller.insertCity(req);
+controller.insertPlacePhoto(req);
      res.redirect('/places');
  });
  app.get("/insertCreature", async (req, res) => {
