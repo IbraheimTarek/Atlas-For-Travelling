@@ -73,6 +73,9 @@ app.get("/insertTrip", async (req, res) => {
 app.get("/register", async (req, res) => {
   res.render("pages/register");
 });
+app.get("/login", async (req, res) => {
+  res.render("pages/login");
+});
  app.get("/trips", async (req, res) => {
   res.render("pages/Trips");
 });
