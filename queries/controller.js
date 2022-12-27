@@ -3,7 +3,7 @@ const mysql = require("mysql2");
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "bogo", //passwordchanges
+  password: "qqqq1111", //passwordchanges
   database: "mydb",
 });
 
@@ -100,3 +100,26 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       //console.log(fields); // fields contains extra meta data about results,
     }
   );
+
+
+  module.exports.insertUser = (req, res, next) =>
+  connection.query(
+    "INSERT INTO user  (id, userName,email, password,wallet,userType)  VALUES (?,?,?,?,?,?) ",
+    [
+      req.body.id,
+      req.body.userName,
+      req.body.email,
+      req.body.password,
+      req.body.wallet,
+      req.body.userType,
+    ],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(error);
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
+  
+
+ ;
