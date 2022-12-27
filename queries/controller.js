@@ -16,12 +16,13 @@ const connection = mysql.createConnection({
   module.exports.selectCitiesWithPhotos =  
   "select longitude,latitude,`name`,`history`,population,religion,photoURL from place,city as c,placePhotos as p where longitude = c.place_longitude AND latitude = c.place_latitude and longitude = p.place_longitude AND latitude = p.place_latitude";
   
-  module.exports.selectPlace =
-  "SELECT longitude,latitude, placeType,`name`, photoURL,`history`,population,religion,n.discription,t.discription,reserveType,landType FROM place "+
-  "left outer JOIN city as c ON longitude = c.place_longitude AND latitude = c.place_latitude "+
-  "left outer JOIN natureReserve as n ON longitude = n.place_longitude AND latitude = n.place_latitude "+
-  "left outer JOIN topography as t ON longitude = t.place_longitude AND latitude = t.place_latitude " +
-  "left outer JOIN placePhotos as p ON longitude = p.place_longitude AND latitude = p.place_latitude;"; //, returns an object arrys
+  module.exports.selectPlace = (longitude,latitude) =>
+  `SELECT * from (
+    SELECT longitude,latitude, placeType,\`name\`, photoURL,\`history\`,population,religion,n.discription as reserveDiscription,t.discription as topoDiscription,reserveType,landType FROM place 
+    left outer JOIN city as c ON longitude = c.place_longitude AND latitude = c.place_latitude 
+    left outer JOIN natureReserve as n ON longitude = n.place_longitude AND latitude = n.place_latitude 
+    left outer JOIN topography as t ON longitude = t.place_longitude AND latitude = t.place_latitude 
+    left outer JOIN placePhotos as p ON longitude = p.place_longitude AND latitude = p.place_latitude) as ccc where ccc.longitude = ${longitude} AND ccc.latitude = ${latitude} ;`;//, returns an object arrys
 
   module.exports.insertPlace = (req, res, next) =>
   connection.query(

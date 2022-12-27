@@ -47,7 +47,7 @@ app.get("/places/insertTopography", async (req, res) => {
 app.get("/places", async (req, res) => {
   //onsole.log(req.body)
   connection.query(
-    controller.selectPlace,
+    controller.selectAllPlacesWithPhotos,
     async(error, results) => {
       if (error) throw error;
       console.log(results); // results contains rows returned by server
@@ -59,7 +59,15 @@ app.get("/places", async (req, res) => {
 
 app.get("/places/:longitude&:latitude", async (req, res,next) => {
   console.log(req.params);
-  res.render("pages/place");
+  connection.query(
+    controller.selectPlace(req.params.longitude,req.params.latitude),
+    async(error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+      const place = results;
+      res.render("pages/place",{place});
+    });
 });
 app.post("/places",async (req, res) => {
   console.log(req.body);
