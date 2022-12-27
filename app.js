@@ -29,7 +29,7 @@ app.use(method("_method"));
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: 'bogo',//passwordchanges
+  password: 'qqqq1111',//passwordchanges
   database: "mydb",
 });
 
@@ -68,14 +68,23 @@ app.get("/places/:longitude&:latitude", async (req, res,next) => {
       const place = results;
       res.render("pages/place",{place});
     });
-});
-app.post("/places",async (req, res) => {
+  });
+  app.post("/places",async (req, res) => {
   console.log(req.body);
 controller.insertPlace(req);
 controller.insertCity(req);
 controller.insertPlacePhoto(req);
      res.redirect('/places');
  });
+
+ 
+  app.post("/User",async (req, res) => {
+  console.log(req.body);
+controller.insertUser(req);
+     res.redirect('/User');
+ });
+
+
  app.get("/insertCreature", async (req, res) => {
   res.render("pages/insertCreature");
 });
@@ -99,6 +108,9 @@ app.get("/login", async (req, res) => {
 });
  app.get("/CompanyProfile", async (req, res) => {
   res.render("pages/CompanyProfile");
+});
+app.get("/insertUser", async (req, res) => {
+  res.render("pages/insertUser");
 });
 app.use("/", async (req, res) => {
   res.render("pages/home");
