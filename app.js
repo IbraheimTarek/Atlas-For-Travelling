@@ -101,6 +101,12 @@ app.get("/login", async (req, res) => {
 app.get("/trips", async (req, res) => {
   res.render("pages/Trips");
 });
+ app.get("/Profile", async (req, res) => {
+  res.render("pages/Profile");
+});
+ app.get("/CompanyProfile", async (req, res) => {
+  res.render("pages/CompanyProfile");
+});
 app.use("/", async (req, res) => {
   res.render("pages/home");
 });
