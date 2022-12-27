@@ -6,31 +6,50 @@
     method="post"
   >
     <div class="mb-3">
-      <label for="hotelName" class="form-label">Hotel Name</label>
+      <label for="id" class="form-label">Trip ID</label>
       <input
-      name="name"
+      name="id"
         type="text"
         class="form-control"
-        id="hotelName"
+        id="id"
         aria-describedby="emailHelp"
       />
     </div>
-    <div class="mb-3">    
-      <label for="HotelRating" class="form-label">Example range</label>
-      <input name="rating" type="range" class="form-range" min="0" max="5" step="0.5" id="HotelRating">
+    <div class="mb-3">
+      <label for="Price" class="form-label">Price</label>
+      <input name="price" type="text" class="form-control" id="Price" />
     </div>
 
     <div class="mb-3">
-      <label for="Location" class="form-label">Location</label>
-      <input name="location" type="text" class="form-control" id="Location" />
+      <label for="TripType" class="form-label">Trip Type</label>
+      <input name="tripType" type="text" class="form-control" id="TripType" />
+    </div>
+
+    <div class="mb-3">
+      <label for="NumberOfDays" class="form-label">Number of days</label>
+      <input name="numberOfDays" class="form-control" id="NumberOfDays" rows="3"></input>
     </div>
 
     <div class="mb-3">
       <label for="discription" class="form-label">Discription</label>
       <textarea name="discription" class="form-control" id="discription" rows="3"></textarea>
     </div>
-    
-    <div class="mb-3"> Accociate place</div>
+
+    <div class="row form-group">
+      <label for="date" class="col-sm-1 col-form-label">Date</label>
+      <div class="col-sm-4">
+          <div class="input-group date" id="datepicker">
+              <input name="date" type="text" class="form-control">
+              <span class="input-group-append">
+                  <span class="input-group-text bg-white">
+                      <i class="fa fa-calendar"></i>
+                  </span>
+              </span>
+          </div>
+      </div>
+  </div>
+
+    <div class="mt-3 mb-2"> Associate place</div>
     <div class="row g-3">
       <div class="col-auto">
         <label for="Longitude" class="form-label">Longitude</label>
@@ -42,6 +61,14 @@
       </div>
     </div>
 
+    <div class="mt-3 mb-2"> Associate Bus</div>
+    <div class="row g-3">
+      <div class="col-auto">
+        <label for="Bus" class="form-label">Bus ID</label>
+        <input name="bus_id" type="email" class="form-control" id="Bus" >
+      </div>
+    </div>
+    
     <button type="submit" class="btn btn-success btn-insert">Insert</button>
   </form>
 </div>
