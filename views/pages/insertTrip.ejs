@@ -1,74 +1,56 @@
 <% layout("boilerplate") %>
 
-<div class="container mt-5 mb-5">
-  <form
-    action="/places"
-    method="post"
-  >
-    <div class="mb-3">
-      <label for="id" class="form-label">Trip ID</label>
-      <input
-      name="id"
-        type="text"
-        class="form-control"
-        id="id"
-        aria-describedby="emailHelp"
-      />
-    </div>
-    <div class="mb-3">
-      <label for="Price" class="form-label">Price</label>
-      <input name="price" type="text" class="form-control" id="Price" />
-    </div>
-
-    <div class="mb-3">
-      <label for="TripType" class="form-label">Trip Type</label>
-      <input name="tripType" type="text" class="form-control" id="TripType" />
-    </div>
-
-    <div class="mb-3">
-      <label for="NumberOfDays" class="form-label">Number of days</label>
-      <input name="numberOfDays" class="form-control" id="NumberOfDays" rows="3"></input>
-    </div>
-
-    <div class="mb-3">
-      <label for="discription" class="form-label">Discription</label>
-      <textarea name="discription" class="form-control" id="discription" rows="3"></textarea>
-    </div>
-
-    <div class="row form-group">
-      <label for="date" class="col-sm-1 col-form-label">Date</label>
-      <div class="col-sm-4">
-          <div class="input-group date" id="datepicker">
-              <input name="date" type="text" class="form-control">
-              <span class="input-group-append">
-                  <span class="input-group-text bg-white">
-                      <i class="fa fa-calendar"></i>
-                  </span>
-              </span>
-          </div>
+  <div class="container mt-5 mb-5">
+    <form action="/trip" method="post">
+      <div class="mb-3">
+        <label for="id" class="form-label">Trip ID</label>
+        <input name="id" type="text" class="form-control" id="id" aria-describedby="emailHelp" />
       </div>
+      <div class="mb-3">
+        <label for="Price" class="form-label">Price</label>
+        <input name="price" type="text" class="form-control" id="Price" />
+      </div>
+
+      <div class="mb-3">
+        <label for="TripType" class="form-label">Trip Type</label>
+        <input name="tripType" type="text" class="form-control" id="TripType" />
+      </div>
+
+      <div class="mb-3">
+        <label for="NumberOfDay" class="form-label">Number of days</label>
+        <input name="numberOfDay" class="form-control" id="NumberOfDay" rows="3"></input>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Discription</label>
+        <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="Date" class="form-label">date</label>
+        <input name="date" class="form-control" id="Date" rows="3"></input>
+      </div>
+
+      <div class="mt-3 mb-2"> Associate place</div>
+      <div class="row g-3">
+        <div class="col-auto">
+          <label for="Longitude" class="form-label">Longitude</label>
+          <input name="place_longitude" type="text" class="form-control" id="Longitude">
+        </div>
+        <div class="col-auto">
+          <label for="Latitude" class="form-label">Latitude</label>
+          <input name="place_latitude" type="text" class="form-control" id="Latitude">
+        </div>
+      </div>
+
+      <div class="mt-3 mb-2"> Associate Bus</div>
+      <div class="row g-3">
+        <div class="col-auto">
+          <label for="Bus" class="form-label">Bus ID</label>
+          <input name="bus_id" type="text" class="form-control" id="Bus">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success btn-insert">Insert</button>
+    </form>
   </div>
-
-    <div class="mt-3 mb-2"> Associate place</div>
-    <div class="row g-3">
-      <div class="col-auto">
-        <label for="Longitude" class="form-label">Longitude</label>
-        <input name="place_longitude" type="email" class="form-control" id="Longitude" >
-      </div>
-      <div class="col-auto">
-        <label for="Latitude" class="form-label">Latitude</label>
-        <input type="place_Longitude" class="form-control" id="Latitude">
-      </div>
-    </div>
-
-    <div class="mt-3 mb-2"> Associate Bus</div>
-    <div class="row g-3">
-      <div class="col-auto">
-        <label for="Bus" class="form-label">Bus ID</label>
-        <input name="bus_id" type="email" class="form-control" id="Bus" >
-      </div>
-    </div>
-    
-    <button type="submit" class="btn btn-success btn-insert">Insert</button>
-  </form>
-</div>

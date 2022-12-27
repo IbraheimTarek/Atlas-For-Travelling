@@ -1,5 +1,5 @@
 const mysql = require("mysql2");
-
+const ExpressErrors = require("../utlis/ExpressErrors");
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -98,7 +98,7 @@ module.exports.insertPlacePhoto = (req, res, next) =>
   );
 
 
-  module.exports.insertUser = (req, res, next) =>
+  module.exports.insertUserExplorer = (req, res, next) =>
   connection.query(
     "INSERT INTO user (userName,email, password,wallet,userType)  VALUES (?,?,?,?,?) ",
     [
@@ -112,24 +112,84 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       if (error) throw error;
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
+      connection.query(
+        `select id from \`user\` where userName =\'${req.body.userName}\'`,
+        [
+          req.body.userName,
+          req.body.email,
+          req.body.password,
+          0,
+          req.body.userType,
+        ],
+        async(error, results) => {
+          if (error) throw error;
+          console.log(results); // results contains rows returned by server
+          //console.log(fields); // fields contains extra meta data about results,
+          connection.query(
+            `INSERT INTO explorer (user_id,bio)  VALUES (${results[0].id},?) `,
+            [
+              req.body.bio
+            ],
+            async(error, results) => {
+              if (error) throw error;
+              console.log(results); // results contains rows returned by server
+              //console.log(fields); // fields contains extra meta data about results,
+              
+            }
+          );
+        }
+      );
     }
   );
-  module.exports.selectUserID = (name) => `select id from \`user\` where userName =\'${name}\'`;
-  module.exports.insertExplorer = (req, id, res, next) =>
+  module.exports.insertUserCompany = (req, res, next) =>
   connection.query(
-    `INSERT INTO explorer (user_id,bio)  VALUES (${id},?) `,
+    "INSERT INTO user (userName,email, password,wallet,userType)  VALUES (?,?,?,?,?) ",
     [
-      req.body.bio
+      req.body.userName,
+      req.body.email,
+      req.body.password,
+      0,
+      req.body.userType,
     ],
     async(error, results) => {
       if (error) throw error;
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
+      connection.query(
+        `select id from \`user\` where userName =\'${req.body.userName}\'`,
+        [
+          req.body.userName,
+          req.body.email,
+          req.body.password,
+          0,
+          req.body.userType,
+        ],
+        async(error, results) => {
+          if (error) throw error;
+          console.log(results); // results contains rows returned by server
+          //console.log(fields); // fields contains extra meta data about results,
+          connection.query(
+            `INSERT INTO company (user_id, companyName,bio)  VALUES (${results[0].id},?,?) `,
+            [
+              req.body.companyName,
+              req.body.bio
+            ],
+            async(error, results) => {
+              if (error) throw new ExpressErrors(error.message,error.code);
+              console.log(results); // results contains rows returned by server
+              //console.log(fields); // fields contains extra meta data about results,
+              
+            }
+          );
+        }
+      );
     }
   );
+  module.exports.selectUserID = (name) => `select id from \`user\` where userName =\'${name}\'`;
+
   module.exports.insertBus = (req, res, next) =>
   connection.query(
-    "INSERT INTO bus  (id, agency,capacity)  VALUES (?,?,?) ",
+    "INSERT INTO bus (id, agency,capacity)  VALUES (?,?,?) ",
     [
       req.body.id,
       req.body.agency,
@@ -142,6 +202,30 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       //console.log(fields); // fields contains extra meta data about results,
     }
   );
-  
+  module.exports.insertTrip = (req,companyid, res, next) =>
+  connection.query(
+    `INSERT INTO trip  (id, price, tripType, numberOfDay, \`description\`, \`date\`, company_user_id, bus_id, place_longitude, place_latitude,noOfExpolorers)  
+    VALUES (?,?,?,?,?,?,${req.session.user_id},?,?,?,?)`,
+    [
+      req.body.id,
+      req.body.price,
+      req.body.tripType,
+      req.body.numberOfDay,
+      req.body.description,
+      req.body.date,
+      req.body.bus_id,
+      req.body.place_longitude,
+      req.body.place_latitude,
+      0
+    ],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      console.log(error);
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
 
  

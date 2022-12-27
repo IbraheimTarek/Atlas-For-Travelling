@@ -11,8 +11,11 @@ const path = require("path");
 const method = require("method-override");
 const mysql = require("mysql2");
 const controller = require("./queries/controller");
-const { render } = require("ejs");
-const e = require("express");
+const session = require("express-session");
+const { resolve } = require("path");
+const { rejects } = require("assert");
+const catchAsync = require("./utlis/catchAsync");
+const { query } = require("express");
 app.engine("ejs", ejsMate); //to include the headers and the partial templates
 
 //ejs setup and getting ejs files from the views directory
@@ -33,6 +36,38 @@ const connection = mysql.createConnection({
   password: 'bogo',//passwordchanges
   database: "mydb",
 });
+
+const sessionConfig = {
+  secret: "nice secret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+
+app.use(session(sessionConfig));
+
+const isLoggedIn = (req, res, next) => {
+  if(!req.session.user_id){
+    return res.redirect("/login");
+  }
+  next();
+};
+const verifyAdmin = (req, res, next) => {
+  if(!req.session.isAdmin){
+    return res.redirect("/login");
+  }
+  next();
+};
+const verifyCompany= (req, res, next) => {
+  if(req.session.userType == 1 || req.session.isAdmin){
+  next();
+  }
+  return res.redirect("/login");
+};
 
 app.get("/places/insertCity", async (req, res) => {
   res.render("pages/insertCity");
@@ -57,7 +92,7 @@ app.get("/places/:longitude&:latitude", async (req, res, next) => {
     }
   );
 });
-app.get("/places", async (req, res) => {
+app.get("/places",isLoggedIn, async (req, res) => {
   //onsole.log(req.body)
   connection.query(
     controller.selectAllPlacesWithPhotos,
@@ -88,16 +123,35 @@ app.post("/places", async (req, res) => {
 
 
 
-app.post("/Bus", async (req, res) => {
+app.post("/Bus",async (req, res, next) => {
   console.log(req.body);
-  controller.insertBus(req);
+  const qry = connection.query(
+    "INSERT INTO bus (id, agency,capacity)  VALUES (?,?,?) ",
+    [
+      req.body.id,
+      req.body.agency,
+      req.body.capacity,
+    ]
+  );
+    qry.on('error', function(err) {
+      
+    })
+    .on('fields', function(fields) {
+      // the field packets for the rows to follow
+    })
+    .on('result', function(row) {
+      console.log(results);
+      connection.pause();
+  
+      processRow(row, function() {
+        connection.resume();
+      });
+    })
+    .on('end', function() {
+      // all rows have been received
+    });
   res.redirect("/Bus");
 });
-
-
-
-
-
 
 
 app.post("/register", async (req, res) => {
@@ -110,51 +164,105 @@ app.post("/register", async (req, res) => {
   res.redirect("/");
 });
 
+app.post("/login", async (req, res,next) => {
+  connection.query(
+    `select password from \`user\` where password =\'${req.body.password}\'`,
+    async(error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+      try{
+        if(!results[0].password)  {
+          res.redirect("/login");
+        }else{
+          connection.query(
+            `select * from \`user\` where userName =\'${req.body.userName}\'`,
+            async(error, results) => {
+              if (error) throw error;
+              console.log(results); // results contains rows returned by server
+              req.session.user_id = results[0].id;
+              req.session.userType = results[0].userType;
+              if(results[0].userName.substr(0,2)== "999"){
+                req.session.isAdmin = true;
+              }
+              else{
+                req.session.isAdmin = false;
+              }
+              res.redirect("/");
+            }
+          );
+        }
+      }
+      catch(error){
+        next(error);
+      }
+      
+    }
+  );
+  
+});
 
-app.get("/insertCreature", async (req, res) => {
+app.post("/trip",isLoggedIn,verifyCompany, ( async(req, res,next) => {
+  console.log(req.body);
+  try{
+    controller.insertTrip(req);
+    if(err){
+      throw new ExpressErrors("can't insert",101);
+    }
+  }catch(e){
+    next(e);
+  }
+
+
+  res.redirect("/places");
+}));
+app.get("/insertCreature", (req, res) => {
   res.render("pages/insertCreature");
 });
-app.get("/insertHotel", async (req, res) => {
+app.get("/insertHotel", (req, res) => {
   res.render("pages/insertHotel");
 });
-app.get("/insertTrip", async (req, res) => {
+app.get("/insertTrip", (req, res) => {
   res.render("pages/insertTrip");
 });
-app.get("/registerforexpolerers", async (req, res) => {
+app.get("/registerforexpolerers", (req, res) => {
   res.render("pages/registerExplorer");
 });
-app.get("/registerforcompany", async (req, res) => {
+app.get("/registerforcompany", (req, res) => {
   res.render("pages/registerCompany");
 });
-app.get("/login", async (req, res) => {
+app.get("/login", (req, res) => {
   res.render("pages/login");
 });
-app.get("/trips", async (req, res) => {
+app.get("/trips", (req, res) => {
   res.render("pages/Trips");
 });
- app.get("/Profile", async (req, res) => {
+ app.get("/Profile", (req, res) => {
   res.render("pages/Profile");
 });
- app.get("/CompanyProfile", async (req, res) => {
+ app.get("/CompanyProfile", (req, res) => {
   res.render("pages/CompanyProfile");
 });
- app.get("/AdminProfile", async (req, res) => {
+ app.get("/AdminProfile", (req, res) => {
   res.render("pages/AdminProfile");
 });
-app.get("/insertUser", async (req, res) => {
+app.get("/insertUser", (req, res) => {
   res.render("pages/insertUser");
 });
-app.get("/insertBus", async (req, res) => {
+app.get("/insertBus", (req, res) => {
   res.render("pages/insertBus");
 });
-app.use("/", async (req, res) => {
+app.use("/", (req, res) => {
   res.render("pages/home");
 });
 
 app.all("*", (req, res, next) => {
   next(new ExpressErrors("Page Not Found", 404));
 });
-
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message = "Somthing went wrong" } = err;
+  res.status(statusCode).render("error", { err });
+});
 //to open the server
 app.listen(3000, () => {
   console.log("Serving on port 3000");
