@@ -67,6 +67,9 @@ app.post("/places",async (req, res) => {
 app.get("/insertHotel", async (req, res) => {
   res.render("pages/insertHotel");
 });
+app.get("/insertTrip", async (req, res) => {
+  res.render("pages/insertTrip");
+});
  app.get("/trips", async (req, res) => {
   res.render("pages/Trips");
 });
