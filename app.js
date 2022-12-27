@@ -16,8 +16,9 @@ app.engine("ejs", ejsMate); //to include the headers and the partial templates
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// getting styles and js fronten files from the public dirctory
-app.use(express.static(path.join(__dirname,'public')));   // i've edit this line hema to connect my css files
+// getting styles and js frontend files from the public dirctory
+app.use(express.static(path.join(__dirname, "public"))); 
+//app.use("/public", express.static(path.join(__dirname, "public")));  // i've edit this line hema to connect my css files
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(method("_method"));
@@ -26,13 +27,25 @@ app.use(method("_method"));
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: 'qqqq1111',//passwordchanges
+  password: 'bogo',//passwordchanges
   database: "mydb",
+});
+
+app.get("/places/insertCity", async (req, res) => {
+  res.render("pages/insertCity");
+});
+
+
+app.get("/places/insertNatureReserve", async (req, res) => {
+  res.render("pages/insertNatureReserve");
+});
+app.get("/places/insertTopography", async (req, res) => {
+  res.render("pages/insertTopography");
 });
 app.get("/places", async (req, res) => {
   //onsole.log(req.body)
   connection.query(
-    controller.selectCitiesWithPhotos,
+    controller.selectAllPlacesWithPhotos,
     async(error, results) => {
       if (error) throw error;
       console.log(results); // results contains rows returned by server
@@ -41,30 +54,22 @@ app.get("/places", async (req, res) => {
       res.render("pages/places",{cities});
     });
 });
-app.get("/places/insertCity", async (req, res) => {
-  res.render("pages/insertCity");
-});
-app.get("/trips", async (req, res) => {
-  res.render("pages/Trips");
-});
-app.get("/dad", async (req, res) => {
-  res.render("pages/insertCreature");
-});
-app.get("/places/insertNatureReserve", async (req, res) => {
-  res.render("pages/insertNatureReserve");
-});
-app.get("/places/insertTopography", async (req, res) => {
-  res.render("pages/insertTopography");
-});
-
 app.post("/places",async (req, res) => {
-controller.insertPlace(req);
-controller.insertCity(req);
-controller.insertPlacePhoto(req);
+  console.log(req.body);
+// controller.insertPlace(req);
+// controller.insertCity(req);
+// controller.insertPlacePhoto(req);
      res.redirect('/places');
  });
-
-
+ app.get("/insertCreature", async (req, res) => {
+  res.render("pages/insertCreature");
+});
+app.get("/insertHotel", async (req, res) => {
+  res.render("pages/insertHotel");
+});
+ app.get("/trips", async (req, res) => {
+  res.render("pages/Trips");
+});
 app.use("/", async (req, res) => {
   res.render("pages/home");
 });
