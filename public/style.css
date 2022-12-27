@@ -34,6 +34,30 @@ he says that the normalize that elzero said  is no more necessary
 
 
 
+body {
+  background: #111 !important;
+}
+
+
+/*
+card style 
+ */
+.card{
+  margin: 5% 0%;
+}
+
+.card-body{
+  margin: 0% 0% 0% 3%;
+  padding: 6% 0%;
+  
+  font-size: 22px;
+}
+.btn-insert{
+  height: 37px;
+    width: 111px;
+    margin: 0 0 0 38%;
+  
+}
 
 
 
@@ -299,93 +323,50 @@ body {
     transform: translateY(-1.5rem);
     box-shadow: 0 2.5rem 4rem rgba(0, 0, 0, 0.4); }
 
+
+/* card
+
+:root {
+  --gradient: linear-gradient(to left top, #DD2476 10%, #FF512F 90%) !important;
+}
+
+body {
+  background: #111 !important;
+}
+
 .card {
-  perspective: 150rem;
-  position: relative;
-  height: 52rem; }
-  .card__side {
-    width: 100%;
-    height: 52rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: all .8s ease;
-    backface-visibility: hidden;
-    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
-    border-radius: 30px;
-    overflow: hidden; }
-    .card__side--front {
-      background-color: #fff; }
-    .card__side--back {
-      transform: rotateY(-180deg); }
-      .card__side--back-1 {
-        background-image: linear-gradient(to right bottom, #ffb900, #ff7730); }
-      .card__side--back-2 {
-        background-image: linear-gradient(to right bottom, #7ed56f, #28b485); }
-      .card__side--back-3 {
-        background-image: linear-gradient(to right bottom, #2998ff, #5643fa); }
-  .card:hover .card__side--front {
-    transform: rotateY(180deg); }
-  .card:hover .card__side--back {
-    transform: rotateY(0deg); }
-  .card__picture {
-    background-size: cover;
-    height: 44%;
-    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-    background-blend-mode: color; }
-    .card__picture--1 {
-      background-image: linear-gradient(to right bottom, #ffb900, #ff7730), url(/img/nat-5.jpg); }
-    .card__picture--2 {
-      background-image: linear-gradient(to right bottom, #7ed56f, #28b485), url(/img/nat-6.jpg); }
-    .card__picture--3 {
-      background-image: linear-gradient(to right bottom, #2998ff, #5643fa), url(/img/nat-7.jpg); }
-  .card__heading {
-    font-size: 2.8rem;
-    font-weight: 300;
-    text-transform: uppercase;
-    text-align: right;
-    position: absolute;
-    right: 2rem;
-    top: 12rem;
-    color: #fff;
-    width: 75%; }
-  .card__heading-span {
-    padding: 1rem 1.5rem;
-    -webkit-box-decoration-break: clone; }
-    .card__heading-span--1 {
-      background-image: linear-gradient(to right bottom, rgba(255, 185, 0, 0.85), rgba(255, 119, 48, 0.85)); }
-    .card__heading-span--2 {
-      background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.85), rgba(40, 180, 133, 0.85)); }
-    .card__heading-span--3 {
-      background-image: linear-gradient(to right bottom, rgba(41, 152, 255, 0.85), rgba(86, 67, 250, 0.85)); }
-  .card__details {
-    padding: 3rem; }
-    .card__details ul {
-      list-style: none;
-      width: 80%;
-      margin: 0 auto; }
-      .card__details ul li {
-        text-align: center;
-        font-size: 1.5rem;
-        padding: 1rem; }
-        .card__details ul li:not(:last-child) {
-          border-bottom: 1px solid #eee; }
-  .card__cta {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    text-align: center; }
-  .card__price-box {
-    color: #fff;
-    margin-bottom: 8rem; }
-  .card__price-only {
-    font-size: 1.4rem;
-    text-transform: uppercase; }
-  .card__price-value {
-    font-weight: 100;
-    font-size: 8rem; }
+  background: #222;
+  border: 1px solid #dd2476;
+  color: rgba(250, 250, 250, 0.8);
+  margin-bottom: 2rem;
+}
+
+.btn {
+  border: 5px solid;
+  border-image-slice: 1;
+  background: var(--gradient) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  border-image-source:  var(--gradient) !important; 
+  text-decoration: none;
+  transition: all .4s ease;
+}
+
+.btn:hover, .btn:focus {
+      background: var(--gradient) !important;
+  -webkit-background-clip: none !important;
+  -webkit-text-fill-color: #fff !important;
+  border: 5px solid #fff !important; 
+  box-shadow: #222 1px 0 10px;
+  text-decoration: underline;
+}
+
+
+*/
+
+
+
+
 
 .story {
   background-color: rgba(255, 255, 255, 0.7);
