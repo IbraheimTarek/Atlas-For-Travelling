@@ -16,7 +16,7 @@ const connection = mysql.createConnection({
   module.exports.selectCitiesWithPhotos =  
   "select longitude,latitude,`name`,`history`,population,religion,photoURL from place,city as c,placePhotos as p where longitude = c.place_longitude AND latitude = c.place_latitude and longitude = p.place_longitude AND latitude = p.place_latitude;";
   
-module.exports.selectTripsInsidePlace = (longitude,latitude) =>`select id, companyName, company_user_id, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, busId, agency, capacity from place,
+module.exports.selectTripsInsidePlace = (longitude,latitude) =>`select DISTINCT id, companyName, company_user_id, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, busId, agency, capacity from place,
 (select companyName, trip.id, company_user_id,  bus.id as busId, agency, capacity, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, place_longitude, place_latitude from trip
 inner join company on company_user_id = user_id inner join bus on bus.id = bus_id) as output 
 where  place_longitude = ${longitude}  and place_latitude = ${latitude}`;
