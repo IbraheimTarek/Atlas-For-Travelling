@@ -88,7 +88,17 @@ app.get("/places/:longitude&:latitude", async (req, res, next) => {
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
       const place = results;
-      res.render("pages/place", { place });
+      connection.query(
+        controller.selectTripsInsidePlace(req.params.longitude, req.params.latitude),
+        async (error, results) => {
+          if (error) throw error;
+          console.log(results); // results contains rows returned by server
+          //console.log(fields); // fields contains extra meta data about results,
+          const trips = results;
+          
+          res.render("pages/place", { place, trips });
+        }
+      );
     }
   );
 });
@@ -110,11 +120,11 @@ app.get("/places",isLoggedIn, async (req, res) => {
 app.post("/places", async (req, res) => {
   console.log(req.body);
   controller.insertPlace(req);
-  if (req.placeType == 0) {
+  if (req.body.placeType == 0) {
     controller.insertCity(req);
-  } else if (req.placeType == 1) {
+  } else if (req.body.placeType == 1) {
     controller.insertNatureReserve(req);
-  } else if (req.placeType == 2){
+  } else if (req.body.placeType == 2){
     controller.insertTopography(req);
   }
   controller.insertPlacePhoto(req);
@@ -125,27 +135,15 @@ app.post("/places", async (req, res) => {
 
 app.post("/Bus",async (req, res, next) => {
   console.log(req.body);
-  const qry = connection.query(
-    "INSERT INTO bus (id, agency,capacity)  VALUES (?,?,?) ",
-    [
-      req.body.id,
-      req.body.agency,
-      req.body.capacity,
-    ]
-  );
+  const qry = controller.insertBus(req);
     qry.on('error', function(err) {
-      
+      console.log("failed to insert data");
     })
     .on('fields', function(fields) {
       // the field packets for the rows to follow
     })
     .on('result', function(row) {
-      console.log(results);
-      connection.pause();
-  
-      processRow(row, function() {
-        connection.resume();
-      });
+      console.log(row);
     })
     .on('end', function() {
       // all rows have been received
@@ -204,18 +202,19 @@ app.post("/login", async (req, res,next) => {
 
 app.post("/trip",isLoggedIn,verifyCompany, ( async(req, res,next) => {
   console.log(req.body);
-  try{
-    controller.insertTrip(req);
-    if(err){
-      throw new ExpressErrors("can't insert",101);
-    }
-  }catch(e){
-    next(e);
-  }
-
-
+  const qry =  controller.insertTrip(req);
+  qry.on('error', function(err) {
+  })
+  .on('fields', function(fields) {
+  })
+  .on('result', function(row) {
+    console.log(row);
+  })
+  .on('end', function() {
+  });
   res.redirect("/places");
 }));
+
 app.get("/insertCreature", (req, res) => {
   res.render("pages/insertCreature");
 });

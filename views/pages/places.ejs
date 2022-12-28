@@ -1,11 +1,11 @@
 <% layout("boilerplate") %> 
 
-<div class="container">
+<div class="container ">
   <div class="card-deck row">
 <% for(let place of places) {%>
   <div class="col-xs-16 col-sm-8 col-md-6">
     <!-- Card -->
-    <div class="card">
+    <div class="card bg-warning text-dark">
   
       <!--Card image-->
       <div class="view overlay">
@@ -19,12 +19,12 @@
       <div class="card-body">
   
         <!--Title-->
-        <h3 class="card-title"><%= place.name %> </h3>
-        <h6 class="card-title"><%= place.country_name%> </h6>
+        <h3 class="card-header bg-dark text-warning"><%= place.name %> </h3>
+        <h6 class="card-header"><%= place.country_name%> </h6>
         <!--Text-->
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-        <a href="/places/<%=place.longitude%>&<%=place.latitude%> " class="btn btn-primary">Go somewhere</a>
+        <a href="/places/<%=place.longitude%>&<%=place.latitude%> " class="btn btn-dark">Go somewhere</a>
   
       </div>
   
