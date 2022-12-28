@@ -213,6 +213,9 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       req.body.capacity,
     ],
   );
+
+  
+  
   module.exports.insertTrip = (req, res, next) =>
   connection.query(
     `INSERT INTO trip  (id, price, tripType, numberOfDay, \`description\`, \`date\`, company_user_id, bus_id, place_longitude, place_latitude,noOfExpolorers)  
@@ -234,5 +237,41 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       //console.log(fields); // fields contains extra meta data about results,
     }
   );
+  module.exports.insertHotel =  (req, res, next) =>
+  connection.query(
+    "INSERT INTO hotel (name, `discription`, rating, location, place_longitude, place_latitude) VALUES (?,?,?,?,?,?);",
+    [
+      req.body.name,
+      req.body.discription,
+      req.body.rating,
+      req.body.location,
+      req.body.place_longitude,
+      req.body.place_latitude
+    ],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
 
- 
+ ////////////////////////// update//////////////////////////
+
+    module.exports.updateBus = (req, res, next) =>
+    connection.query(
+      `update bus  set agency=\'${ req.body.agency}\',capacity=${req.body.capacity} where id=\'${req.body.id}\';`
+      ,  async(error, results) => {
+        if (error) throw error;
+        console.log(results); // results contains rows returned by server
+        //console.log(fields); // fields contains extra meta data about results,
+      }
+    );
+    module.exports.updateHotel = (req, res, next) =>
+    connection.query(
+      `update hotel set discription=\'${req.body.discription}\',rating=${req.body.rating}, location=\'${req.body.location}\' , place_longitude=${req.body.place_longitude} ,place_latitude=${req.body.place_latitude} where  name=\'${req.body.name}\';`
+      ,  async(error, results) => {
+        if (error) throw error;
+        console.log(results); // results contains rows returned by server
+        //console.log(fields); // fields contains extra meta data about results,
+      }
+    );

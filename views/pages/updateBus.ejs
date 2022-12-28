@@ -2,20 +2,20 @@
 
 <div class="container mt-5 mb-5">
   <form
-    action="/Bus"
+    action="/Bus?_method=put"
     method="post"
   >
   <div class="mb-3">
-      <label for="id" class="form-label">id</label>
-      <input name="id" type="text" class="form-control" id="id" />
+      <label for="id" class="form-label" >The Target Bus Id</label>
+      <input name="id" type="text" class="form-control" id="id"   placeholder="old" />
     </div>    
     <div class="mb-3">
-      <label for="agency" class="form-label">agency</label>
-      <input name="agency" type="text" class="form-control" id="agency" />
+      <label for="agency" class="form-label" >agency</label>
+      <input name="agency" type="text" class="form-control" id="agency"  placeholder="old" />
     </div>
     <div class="mb-3">
-      <label for="capacity" class="form-label">capacity</label>
-      <input name="capacity" type="text" class="form-control" id="capacity" />
+      <label for="capacity" class="form-label" >capacity</label>
+      <input name="capacity" type="text" class="form-control" id="capacity" placeholder="old" />
     </div>
     <button type="submit" class="btn btn-success btn-insert">Insert</button>
  

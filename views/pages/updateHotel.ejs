@@ -2,7 +2,7 @@
 
 <div class="container mt-5 mb-5">
   <form
-    action="/places"
+    action="/places?_method=put"
     method="post"
   >
     <div class="mb-3">
@@ -13,32 +13,33 @@
         class="form-control"
         id="hotelName"
         aria-describedby="emailHelp"
+         placeholder="old"
       />
     </div>
     <div class="mb-3">    
       <label for="HotelRating" class="form-label">Example range</label>
-      <input name="rating" type="range" class="form-range" min="0" max="5" step="0.5" id="HotelRating">
+      <input name="rating" type="range" class="form-range" min="0" max="5" step="0.5" id="HotelRating" placeholder="old">
     </div>
 
     <div class="mb-3">
       <label for="Location" class="form-label">Location</label>
-      <input name="location" type="text" class="form-control" id="Location" />
+      <input name="location" type="text" class="form-control" id="Location"  placeholder="old"/>
     </div>
 
     <div class="mb-3">
       <label for="discription" class="form-label">Discription</label>
-      <textarea name="discription" class="form-control" id="discription" rows="3"></textarea>
+      <textarea name="discription" class="form-control" id="discription" rows="3" placeholder="old"></textarea>
     </div>
     
     <div class="mb-3"> Associate place</div>
     <div class="row g-3">
       <div class="col-auto">
         <label for="Longitude" class="form-label">Longitude</label>
-        <input name="place_longitude" type="email" class="form-control" id="Longitude" >
+        <input name="place_longitude" type="email" class="form-control" id="Longitude"  placeholder="old">
       </div>
       <div class="col-auto">
         <label for="Latitude" class="form-label">Latitude</label>
-        <input type="place_Longitude" class="form-control" id="Latitude">
+        <input type="place_Longitude" class="form-control" id="Latitude" placeholder="old">
       </div>
     </div>
 

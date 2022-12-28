@@ -85,16 +85,7 @@ const verifyExplorer= (req, res, next) => {
   throw (new ExpressErrors("You should be an explorer"));
 };
 
-app.get("/places/insertCity", async (req, res) => {
-  res.render("pages/insertCity");
-});
 
-app.get("/places/insertNatureReserve", async (req, res) => {
-  res.render("pages/insertNatureReserve");
-});
-app.get("/places/insertTopography", async (req, res) => {
-  res.render("pages/insertTopography");
-});
 app.get("/places/:longitude&:latitude&:id&:company_user_id",verifyExplorer,(req, res, next) => {
   console.log(req.params);
   controller.insertEnroller(req);
@@ -138,6 +129,9 @@ app.get("/places",isLoggedIn, async (req, res) => {
 });
 
 
+
+
+
 app.post("/places", async (req, res) => {
   console.log(req.body);
   controller.insertPlace(req);
@@ -171,6 +165,7 @@ app.post("/Bus",async (req, res, next) => {
     });
     res.redirect("/")
 });
+
 
 
 app.post("/register", async (req, res) => {
@@ -210,38 +205,93 @@ app.post("/login", async (req, res,next) => {
               }
               res.redirect("/");
             }
-          );
+            );
+          }
         }
+        catch(error){
+          next(error);
+        }
+        
       }
-      catch(error){
-        next(error);
-      }
+      );
       
-    }
-  );
-  
-});
-
-app.post("/trip",isLoggedIn,verifyCompany, ( async(req, res,next) => {
-  console.log(req.body);
-  const qry =  controller.insertTrip(req);
-  qry.on('error', function(err) {
-  })
-  .on('fields', function(fields) {
-  })
-  .on('result', function(row) {
-    console.log(row);
-  })
+    });
+    
+    app.post("/trip",isLoggedIn,verifyCompany, ( async(req, res,next) => {
+      console.log(req.body);
+      const qry =  controller.insertTrip(req);
+      qry.on('error', function(err) {
+      })
+      .on('fields', function(fields) {
+      })
+      .on('result', function(row) {
+        console.log(row);
+      })
   .on('end', function() {
   });
   res.redirect("/places");
 }));
+
 app.post("/insertAdmin",verifyAdmin,(req, res) => {
   controller.insertAdmin(req);
   res.redirect("/");
 });
+////////////////////////// app.put //////////////////////////
+
+
+app.put("/Bus",async (req, res, next) => {
+  console.log(req.body);
+  const qry = controller.updateBus(req);
+    res.redirect("/")
+});
+app.put("/places",async (req, res, next) => {
+  console.log(req.body);
+  const qry = controller.updateHotel(req);
+    res.redirect("/")
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////// app.get //////////////////////////
+
+
 app.get("/insertAdmin",verifyAdmin,(req, res) => {
   res.render("pages/registerAdmin");
+});
+
+// insert
+app.get("/places/insertCity", async (req, res) => {
+  res.render("pages/insertCity");
+});
+
+app.get("/places/insertNatureReserve", async (req, res) => {
+  res.render("pages/insertNatureReserve");
+});
+app.get("/places/insertTopography", async (req, res) => {
+  res.render("pages/insertTopography");
+});
+app.get("/insertBus", (req, res) => {
+  res.render("pages/insertBus");
+});
+app.get("/insertUser", (req, res) => {
+  res.render("pages/insertUser");
 });
 app.get("/insertCreature", (req, res) => {
   res.render("pages/insertCreature");
@@ -252,6 +302,36 @@ app.get("/insertHotel", (req, res) => {
 app.get("/insertTrip", (req, res) => {
   res.render("pages/insertTrip");
 });
+
+// update
+
+app.get("/places/updateCity", async (req, res) => {
+  res.render("pages/updateCity");
+});
+
+app.get("/places/updateNatureReserve", async (req, res) => {
+  res.render("pages/updateNatureReserve");
+});
+app.get("/places/updateTopography", async (req, res) => {
+  res.render("pages/updateTopography");
+});
+app.get("/updateBus", (req, res) => {
+  res.render("pages/updateBus");
+});
+app.get("/updateUser", (req, res) => {
+  res.render("pages/updateUser");
+});
+app.get("/updateCreature", (req, res) => {
+  res.render("pages/updateCreature");
+});
+app.get("/updateHotel", (req, res) => {
+  res.render("pages/updateHotel");
+});
+app.get("/updateTrip", (req, res) => {
+  res.render("pages/updateTrip");
+});
+
+
 app.get("/registerforexplorer", (req, res) => {
   res.render("pages/registerExplorer");
 });
@@ -263,12 +343,6 @@ app.get("/login", (req, res) => {
 });
 app.get("/trips", (req, res) => {
   res.render("pages/Trips");
-});
-app.get("/insertUser", (req, res) => {
-  res.render("pages/insertUser");
-});
-app.get("/insertBus", (req, res) => {
-  res.render("pages/insertBus");
 });
 app.get("/logout",(req, res) => {
   req.session.destroy();
@@ -294,6 +368,9 @@ app.get("/profile", (req, res,next) => {
 app.get("/", (req, res) => {
   res.render("pages/home");
 });
+
+
+
 
 app.all("*", (req, res, next) => {
   next(new ExpressErrors("Page Not Found", 404));
