@@ -2,7 +2,7 @@
 
 <div class="container mt-5 mb-5 text-light">
   <form
-    action="/places"
+    action="/hotel"
     method="post"
   >
     <div class="mb-3">
@@ -17,7 +17,7 @@
     </div>
     <div class="mb-3">    
       <label for="HotelRating" class="form-label">Example range</label>
-      <input name="rating" type="range" class="form-range" min="0" max="5" step="0.5" id="HotelRating">
+      <input name="rating" type="range" class="form-range" min="0" max="5" step="1" id="HotelRating">
     </div>
 
     <div class="mb-3">
@@ -34,11 +34,11 @@
     <div class="row g-3">
       <div class="col-auto">
         <label for="Longitude" class="form-label">Longitude</label>
-        <input name="place_longitude" type="email" class="form-control" id="Longitude" >
+        <input name="place_longitude" type="text" class="form-control" id="Longitude" >
       </div>
       <div class="col-auto">
         <label for="Latitude" class="form-label">Latitude</label>
-        <input type="place_Longitude" class="form-control" id="Latitude">
+        <input name="place_latitude" type="text" class="form-control" id="Latitude">
       </div>
     </div>
 
