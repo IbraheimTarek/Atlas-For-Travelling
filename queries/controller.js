@@ -16,9 +16,10 @@ const connection = mysql.createConnection({
   module.exports.selectCitiesWithPhotos =  
   "select longitude,latitude,`name`,`history`,population,religion,photoURL from place,city as c,placePhotos as p where longitude = c.place_longitude AND latitude = c.place_latitude and longitude = p.place_longitude AND latitude = p.place_latitude;";
   
-module.exports.selectTripsInsidePlace = (longitude,latitude) =>`select companyName, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers from place,
-(select companyName, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, place_longitude, place_latitude from trip
-inner join company on company_user_id = user_id) as output where  place_longitude = ${longitude}  and place_latitude = ${latitude} ;`;
+module.exports.selectTripsInsidePlace = (longitude,latitude) =>`select id, companyName, company_user_id, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, busId, agency, capacity from place,
+(select companyName, trip.id, company_user_id,  bus.id as busId, agency, capacity, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, place_longitude, place_latitude from trip
+inner join company on company_user_id = user_id inner join bus on bus.id = bus_id) as output 
+where  place_longitude = ${longitude}  and place_latitude = ${latitude}`;
 
   module.exports.selectPlace = (longitude,latitude) =>(
   `SELECT * from (
@@ -105,7 +106,28 @@ module.exports.insertPlacePhoto = (req, res, next) =>
     }
   );
 
+  module.exports.insertEnroller = (req, res, next) =>
+  connection.query(
+    "INSERT INTO enroll (explorer_user_id, trip_id, trip_company_user_id) VALUES (?,?,?);",
+    [req.session.user_id, req.params.id, req.params.company_user_id],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
 
+  module.exports.insertAdmin = (req, res, next) =>
+  connection.query(
+    "INSERT INTO user (userName,email, password,wallet,userType)  VALUES (?,?,?,?,?) ",
+    [
+      req.body.userName,
+      req.body.email,
+      req.body.password,
+      0,
+      3
+    ]
+  );
   module.exports.insertUserExplorer = (req, res, next) =>
   connection.query(
     "INSERT INTO user (userName,email, password,wallet,userType)  VALUES (?,?,?,?,?) ",
@@ -114,7 +136,7 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       req.body.email,
       req.body.password,
       0,
-      req.body.userType,
+      0
     ],
     async(error, results) => {
       if (error) throw error;
@@ -122,13 +144,7 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       //console.log(fields); // fields contains extra meta data about results,
       connection.query(
         `select id from \`user\` where userName =\'${req.body.userName}\'`,
-        [
-          req.body.userName,
-          req.body.email,
-          req.body.password,
-          0,
-          req.body.userType,
-        ],
+
         async(error, results) => {
           if (error) throw error;
           console.log(results); // results contains rows returned by server
@@ -157,7 +173,7 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       req.body.email,
       req.body.password,
       0,
-      req.body.userType,
+      1
     ],
     async(error, results) => {
       if (error) throw error;
@@ -165,13 +181,6 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       //console.log(fields); // fields contains extra meta data about results,
       connection.query(
         `select id from \`user\` where userName =\'${req.body.userName}\'`,
-        [
-          req.body.userName,
-          req.body.email,
-          req.body.password,
-          0,
-          req.body.userType,
-        ],
         async(error, results) => {
           if (error) throw error;
           console.log(results); // results contains rows returned by server
@@ -219,7 +228,11 @@ module.exports.insertPlacePhoto = (req, res, next) =>
       req.body.place_longitude,
       req.body.place_latitude,
       0
-    ]
+    ], async(error, results) => {
+      if (error) throw (new ExpressErrors(error.message,error.statusCode)) ;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
   );
 
  

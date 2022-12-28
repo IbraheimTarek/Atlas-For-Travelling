@@ -56,6 +56,16 @@ const isLoggedIn = (req, res, next) => {
   }
   next();
 };
+app.use((req, res, next) => {
+  res.locals.user_id = req.session.user_id;
+  res.locals.isAdmin = req.session.isAdmin;
+  res.locals.userType = req.session.userType;
+  res.locals.userName = req.session.userName;
+  // res.locals.success = req.flash("success");
+  // res.locals.error = req.flash("error");
+  next();
+});
+
 const verifyAdmin = (req, res, next) => {
   if(!req.session.isAdmin){
     return res.redirect("/login");
@@ -68,6 +78,12 @@ const verifyCompany= (req, res, next) => {
   }
   return res.redirect("/login");
 };
+const verifyExplorer= (req, res, next) => {
+  if(req.session.userType == 0 || req.session.isAdmin){
+  next();
+  }
+  throw (new ExpressErrors("You should be an explorer"));
+};
 
 app.get("/places/insertCity", async (req, res) => {
   res.render("pages/insertCity");
@@ -78,6 +94,11 @@ app.get("/places/insertNatureReserve", async (req, res) => {
 });
 app.get("/places/insertTopography", async (req, res) => {
   res.render("pages/insertTopography");
+});
+app.get("/places/:longitude&:latitude&:id&:company_user_id",verifyExplorer,(req, res, next) => {
+  console.log(req.params);
+  controller.insertEnroller(req);
+  res.redirect(`/places`);
 });
 app.get("/places/:longitude&:latitude", async (req, res, next) => {
   console.log(req.params);
@@ -107,7 +128,7 @@ app.get("/places",isLoggedIn, async (req, res) => {
   connection.query(
     controller.selectAllPlacesWithPhotos,
     async (error, results) => {
-      if (error) throw error;
+      if (error) throw new ExpressErrors(error.message,error.statusCode);
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
       const places = results;
@@ -132,11 +153,11 @@ app.post("/places", async (req, res) => {
 });
 
 
-
 app.post("/Bus",async (req, res, next) => {
   console.log(req.body);
   const qry = controller.insertBus(req);
     qry.on('error', function(err) {
+      next(err);
       console.log("failed to insert data");
     })
     .on('fields', function(fields) {
@@ -148,7 +169,7 @@ app.post("/Bus",async (req, res, next) => {
     .on('end', function() {
       // all rows have been received
     });
-  res.redirect("/Bus");
+    res.redirect("/")
 });
 
 
@@ -166,7 +187,7 @@ app.post("/login", async (req, res,next) => {
   connection.query(
     `select password from \`user\` where password =\'${req.body.password}\'`,
     async(error, results) => {
-      if (error) throw error;
+      if (error) throw new ExpressErrors(error.message,error.statusCode);
       console.log(results); // results contains rows returned by server
       //console.log(fields); // fields contains extra meta data about results,
       try{
@@ -176,10 +197,11 @@ app.post("/login", async (req, res,next) => {
           connection.query(
             `select * from \`user\` where userName =\'${req.body.userName}\'`,
             async(error, results) => {
-              if (error) throw error;
+              if (error) throw new ExpressErrors(error.message,error.statusCode);
               console.log(results); // results contains rows returned by server
               req.session.user_id = results[0].id;
               req.session.userType = results[0].userType;
+              req.session.userName = results[0].userName;
               if(results[0].userName.substr(0,2)== "999" || results[0].userType > 2){
                 req.session.isAdmin = true;
               }
@@ -214,7 +236,13 @@ app.post("/trip",isLoggedIn,verifyCompany, ( async(req, res,next) => {
   });
   res.redirect("/places");
 }));
-
+app.post("/insertAdmin",verifyAdmin,(req, res) => {
+  controller.insertAdmin(req);
+  res.redirect("/");
+});
+app.get("/insertAdmin",verifyAdmin,(req, res) => {
+  res.render("pages/registerAdmin");
+});
 app.get("/insertCreature", (req, res) => {
   res.render("pages/insertCreature");
 });
@@ -224,7 +252,7 @@ app.get("/insertHotel", (req, res) => {
 app.get("/insertTrip", (req, res) => {
   res.render("pages/insertTrip");
 });
-app.get("/registerforexpolerers", (req, res) => {
+app.get("/registerforexplorer", (req, res) => {
   res.render("pages/registerExplorer");
 });
 app.get("/registerforcompany", (req, res) => {
@@ -236,25 +264,34 @@ app.get("/login", (req, res) => {
 app.get("/trips", (req, res) => {
   res.render("pages/Trips");
 });
- app.get("/Profile", (req, res) => {
-  res.render("pages/Profile");
-});
- app.get("/CompanyProfile", (req, res) => {
-  res.render("pages/CompanyProfile");
-});
- app.get("/AdminProfile", (req, res) => {
-  res.render("pages/AdminProfile");
-});
 app.get("/insertUser", (req, res) => {
   res.render("pages/insertUser");
 });
 app.get("/insertBus", (req, res) => {
   res.render("pages/insertBus");
 });
-app.use("/register", (req, res) => {
+app.get("/logout",(req, res) => {
+  req.session.destroy();
+  res.redirect("/");
+});
+app.get("/register", (req, res) => {
   res.render("pages/register");
 });
-app.use("/", (req, res) => {
+app.get("/profile", (req, res,next) => {
+  if(req.session.userType == 0){
+    res.render("pages/Profile");
+  }
+  else if(req.session.userType == 1 ){
+    res.render("pages/CompanyProfile");
+  }
+  else if(req.session.isAdmin){
+  res.render("pages/AdminProfile");
+  }else
+  {
+    next();
+  }
+});
+app.get("/", (req, res) => {
   res.render("pages/home");
 });
 
