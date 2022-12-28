@@ -180,7 +180,7 @@ app.post("/login", async (req, res,next) => {
               console.log(results); // results contains rows returned by server
               req.session.user_id = results[0].id;
               req.session.userType = results[0].userType;
-              if(results[0].userName.substr(0,2)== "999"){
+              if(results[0].userName.substr(0,2)== "999" || results[0].userType > 2){
                 req.session.isAdmin = true;
               }
               else{
@@ -250,6 +250,9 @@ app.get("/insertUser", (req, res) => {
 });
 app.get("/insertBus", (req, res) => {
   res.render("pages/insertBus");
+});
+app.use("/register", (req, res) => {
+  res.render("pages/register");
 });
 app.use("/", (req, res) => {
   res.render("pages/home");

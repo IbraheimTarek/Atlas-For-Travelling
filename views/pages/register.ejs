@@ -1,0 +1,23 @@
+<% layout("boilerplate") %>
+
+<div class="container mt-5 mb-5">
+  <form action="/login" method="post">
+    <div class="row justify-content-center">
+      <div class="col-5 card p-5 bg-warning">
+        <div class="card text-center bg-dark d-flex">
+          <div class="card-header text-light bg-dark flex-row">
+            <h2>Choose your account</h2>
+          </div>
+          <div class="flex-row">
+            <div class="card-body d-flex flex-column">
+              <a href="/registerforcompany" class="btn btn-warning shadow btn-lg">Company</a>
+            </div>
+            <div class="card-body d-flex flex-column ">
+              <a href="/registerforexplorer" class="btn btn-warning shadow btn-lg mt-3">Explorer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
