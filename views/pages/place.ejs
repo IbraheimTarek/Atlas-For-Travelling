@@ -22,22 +22,18 @@
       <h5 class="card-header bg-warning text-dark">Date to lunch: <%= trip.date%> </h5>
       <div class="card-body">
         <h5 class="card-title">Trip Type: <%= trip.tripType%> , Duration: <%= trip.numberOfday%> days, Number Of enrollers: <%= trip.noOfExpolorers%> </h5>
-        
-
         <p>
-          <a href="#" class="btn btn-warning">Enroll</a>
           <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
             See Trip Discription
           </button>
           <div class="collapse " id="collapseExample">
             <div class="card card-body bg-dark text-light">
               <p class="card-text"><%= trip.description%></p>
+            <h6>Bus id: <%= trip.busId%>, Agency: <%= trip.agency%>, Capacity: <%= trip.capacity%></h6>
             </div>
           </div>
         </p>
-
-
-
+          <a class="btn btn-warning" href="/places/<%=place[0].longitude%>&<%=place[0].latitude%>&<%= trip.id %>&<%= trip.company_user_id %>" role="button">Enroll</a>
       </div>
     </div>
     <% } %> 
