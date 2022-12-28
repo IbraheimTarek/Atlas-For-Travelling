@@ -3,7 +3,7 @@ const ExpressErrors = require("../utlis/ExpressErrors");
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "bogo", //passwordchanges
+  password: "qqqq1111", //passwordchanges
   database: "mydb",
 });
 
