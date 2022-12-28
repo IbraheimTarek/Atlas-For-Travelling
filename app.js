@@ -33,7 +33,7 @@ app.use(method("_method"));
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: 'qqqq1111',//passwordchanges
+  password: 'bogo',//passwordchanges
   database: "mydb",
 });
 
@@ -108,7 +108,28 @@ app.get("/places/:longitude&:latitude", async (req, res, next) => {
           //console.log(fields); // fields contains extra meta data about results,
           const trips = results;
           
-          res.render("pages/place", { place, trips });
+          connection.query(
+            controller.selectPlaceHotels(req.params.longitude, req.params.latitude),
+            async (error, results) => {
+              if (error) throw error;
+              console.log(results); // results contains rows returned by server
+              //console.log(fields); // fields contains extra meta data about results,
+              const hotels = results;
+
+
+              connection.query(
+                controller.selectPlaceCreatures(req.params.longitude, req.params.latitude),
+                async (error, results) => {
+                  if (error) throw error;
+                  console.log(results); // results contains rows returned by server
+                  //console.log(fields); // fields contains extra meta data about results,
+                  const creatures = results;
+                  
+                  res.render("pages/place", { place, trips, hotels, creatures});
+                }
+              );
+            }
+          );
         }
       );
     }
@@ -131,6 +152,26 @@ app.get("/places",isLoggedIn, async (req, res) => {
 
 
 
+app.get("/places/:longitude&:latitude/addcreature",async(req, res, next)=>{
+  connection.query(
+    controller.selectCreatures,
+    async (error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+      const creatures = results;
+      res.render("pages/chooseCreature",{creatures , req});
+    }
+  );
+
+});
+
+app.post("/places/:longitude&:latitude/addcreature",async(req, res, next)=>{
+  console.log(req.body);
+  console.log(req.params);
+  controller.insertCreatureHasPlace(req);
+  res.redirect(`/places/${req.params.longitude}&${req.params.latitude}`);
+});
 
 app.post("/places", async (req, res) => {
   console.log(req.body);
@@ -215,18 +256,43 @@ app.post("/login", async (req, res,next) => {
       }
       );
       
-    });
-    
-    app.post("/trip",isLoggedIn,verifyCompany, ( async(req, res,next) => {
-      console.log(req.body);
-      const qry =  controller.insertTrip(req);
-      qry.on('error', function(err) {
-      })
-      .on('fields', function(fields) {
-      })
-      .on('result', function(row) {
-        console.log(row);
-      })
+    }
+  );
+  
+
+app.post("/creature", async (req, res,next) => {
+  if(req.body.endangered == null){
+    req.body.endangered = false;
+  }else{
+    req.body.endangered = true;
+  }
+  try{
+    controller.insertCreature(req);
+    res.redirect("/places")
+  }catch(e){
+    next(e);
+  }
+});
+app.post("/hotel", async (req, res,next) => {
+  console.log(req.body);
+  try{
+    controller.insertHotel(req);
+    res.redirect("/places")
+  }catch(e){
+    next(e);
+  }
+});
+
+app.post("/trip",isLoggedIn,verifyCompany, ( async(req, res,next) => {
+  console.log(req.body);
+  const qry =  controller.insertTrip(req);
+  qry.on('error', function(err) {
+  })
+  .on('fields', function(fields) {
+  })
+  .on('result', function(row) {
+    console.log(row);
+  })
   .on('end', function() {
   });
   res.redirect("/places");

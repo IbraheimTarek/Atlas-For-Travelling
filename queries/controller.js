@@ -3,20 +3,25 @@ const ExpressErrors = require("../utlis/ExpressErrors");
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "qqqq1111", //passwordchanges
+  password: "bogo", //passwordchanges
   database: "mydb",
 });
 
+  module.exports.selectCreatures = `select name from creature`;
   module.exports.selectCities =
   "SELECT longitude,latitude,`name`,`history`,population,religion FROM place INNER JOIN city ON longitude = place_longitude AND latitude = place_latitude;", //, returns an object arrys
 
   module.exports.selectAllPlacesWithPhotos =  
   "select longitude,latitude,`name`, country_name,photoURL from place,placePhotos as p where longitude = p.place_longitude AND latitude = p.place_latitude;";
 
+
   module.exports.selectCitiesWithPhotos =  
   "select longitude,latitude,`name`,`history`,population,religion,photoURL from place,city as c,placePhotos as p where longitude = c.place_longitude AND latitude = c.place_latitude and longitude = p.place_longitude AND latitude = p.place_latitude;";
   
-module.exports.selectTripsInsidePlace = (longitude,latitude) =>`select DISTINCT id, companyName, company_user_id, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, busId, agency, capacity from place,
+  module.exports.selectPlaceHotels = (longitude,latitude) =>
+  `select distinct hotel.\`name\`, rating,location,discription from hotel, place where place_longitude = ${longitude}  and place_latitude = ${latitude} ;`
+  
+  module.exports.selectTripsInsidePlace = (longitude,latitude) =>`select DISTINCT id, companyName, company_user_id, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, busId, agency, capacity from place,
 (select companyName, trip.id, company_user_id,  bus.id as busId, agency, capacity, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, place_longitude, place_latitude from trip
 inner join company on company_user_id = user_id inner join bus on bus.id = bus_id) as output 
 where  place_longitude = ${longitude}  and place_latitude = ${latitude}`;
@@ -29,6 +34,9 @@ where  place_longitude = ${longitude}  and place_latitude = ${latitude}`;
     left outer JOIN topography as t ON longitude = t.place_longitude AND latitude = t.place_latitude 
     left outer JOIN placePhotos as p ON longitude = p.place_longitude AND latitude = p.place_latitude) as ccc where ccc.longitude = ${longitude} AND ccc.latitude = ${latitude} ;`);//, returns an object arrys
 
+    module.exports.selectPlaceCreatures =(longitude,latitude) => `select distinct creature.\`name\`,family,discription,endangered,kingdom from creature_has_place,place,creature
+    where creature.\`name\` = creature_name and place_longitude = ${longitude} and ${latitude} = 30.8428 ;`;
+    
   module.exports.insertPlace = (req, res, next) =>
   connection.query(
     "INSERT INTO place (longitude, latitude, `name`, country_name, placeType) VALUES (?,?,?,?,?);",
@@ -45,7 +53,55 @@ where  place_longitude = ${longitude}  and place_latitude = ${latitude}`;
       //console.log(fields); // fields contains extra meta data about results,
     }
   );
+  module.exports.insertCreature =  (req, res, next) =>
+  connection.query(
+    "INSERT INTO creature (name, family, `discription`, endangered, kingdom) VALUES (?,?,?,?,?);",
+    [
+      req.body.name,
+      req.body.family,
+      req.body.discription,
+      req.body.endangered,
+      req.body.kingdom,
+    ],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
 
+  module.exports.insertCreatureHasPlace =  (req, res, next) =>
+  connection.query(
+    "insert into creature_has_place(place_longitude,place_latitude,creature_name) values(?,?,?);",
+    [
+      req.params.longitude,
+      req.params.latitude,
+      req.body.name,
+    ],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
+
+  module.exports.insertHotel =  (req, res, next) =>
+  connection.query(
+    "INSERT INTO hotel (name, `discription`, rating, location, place_longitude, place_latitude) VALUES (?,?,?,?,?,?);",
+    [
+      req.body.name,
+      req.body.discription,
+      req.body.rating,
+      req.body.location,
+      req.body.place_longitude,
+      req.body.place_latitude
+    ],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
 
 module.exports.insertCity =  (req, res, next) =>
   connection.query(

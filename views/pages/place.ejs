@@ -17,7 +17,7 @@
       </a>
     </div>
     <% for(let trip of trips) {%> 
-    <div class="card bg-dark text-light">
+    <div class="card bg-black text-light">
       <h5 class="card-header">From: <%= trip.companyName%> </h5>
       <h5 class="card-header">Price: <%= trip.price%>$ </h5>
       <h5 class="card-header bg-warning text-dark">Date to lunch: <%= trip.date%> </h5>
@@ -56,29 +56,39 @@
         <p class="card-text"><%= place[0].topoDiscription%></p>
         <h8><b> Land Type: </b><%= place[0].landType%></h8>
       <% } %>
-      <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+       <% if(isAdmin) {%>  
+      <a class="btn mt-3 btn-warning btn-block" href="/places/<%=place[0].longitude%>&<%=place[0].latitude%>/addcreature" role="button">Add Creature</a>
+        <form action="" method="">
+          <button class="btn btn-danger mt-3" role="button">X</button>
+        </form>
+        <% } %> 
     </div>
     <h5 class="card-header">Species associated with this place</h5>
     <!-- animal -->
+    <% for(let creature of creatures) { %> 
     <div class="card text-bg-warning mb-3 d-flex" >
-      <div class="card-header">Header</div>
+      <h4 class="card-header"><%= creature.name %> </h4>
       <div class="card-body">
-        <h5 class="card-title">Warning card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <h6 class="card-title">Family: <%= creature.family %>, Endangered: <%= creature.endangered %> </h6>
+        <p class="card-text"><%= creature.discription %></p>
       </div>
     </div>
-
+    <% } %> 
   </div>
 </div>
 <div class="container" style="width: 20rem;">
+  <h3 class="card-header text-warning">Hotels</h3>
   <!-- Hotels -->
+  <% for(let hotel of hotels) { %> 
  <div class="card text-bg-warning mb-3" style="max-width: 18rem;">
-  <div class="card-header">Header</div>
+  <h4 class="card-header"><%= hotel.name %> </h4>
   <div class="card-body">
-    <h5 class="card-title">Warning card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <h6 class="card-title">Location: <%= hotel.location %></h6>
+    <h6 class="card-title"><%= hotel.rating %> Stars</h6>
+    <p class="card-text"><%= hotel.discription %> </p>
   </div>
 </div> 
+<% } %> 
 
 </div>
 
