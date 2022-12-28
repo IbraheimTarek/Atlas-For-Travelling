@@ -100,6 +100,10 @@ app.get("/places/:longitude&:latitude&:id&:company_user_id",verifyExplorer,(req,
   controller.insertEnroller(req);
   res.redirect(`/places`);
 });
+app.get("/places/:longitude&:latitude&:id&:company_user_id/addreview",verifyExplorer,(req, res, next) => {
+  res.render(`pages/addreview`,{req});
+});
+
 app.get("/places/:longitude&:latitude", async (req, res, next) => {
   console.log(req.params);
   connection.query(
@@ -133,8 +137,18 @@ app.get("/places/:longitude&:latitude", async (req, res, next) => {
                   console.log(results); // results contains rows returned by server
                   //console.log(fields); // fields contains extra meta data about results,
                   const creatures = results;
-                  
-                  res.render("pages/place", { place, trips, hotels, creatures});
+
+                  connection.query(
+                    controller.selectPlaceReviews(req.params.longitude, req.params.latitude),
+                    async (error, results) => {
+                      if (error) throw error;
+                      console.log(results); // results contains rows returned by server
+                      //console.log(fields); // fields contains extra meta data about results,
+                      const reviews = results;
+                      
+                      res.render("pages/place", { place, trips, hotels, creatures, reviews});
+                    }
+                  );
                 }
               );
             }
@@ -171,7 +185,12 @@ app.get("/places/:longitude&:latitude/addcreature",async(req, res, next)=>{
   );
 
 });
-
+app.post("/places/:longitude&:latitude&:id&:company_user_id/addreview",verifyExplorer,(req, res, next) => {
+  console.log(req.body);
+  console.log(req.params);
+  controller.insertReview(req);
+  res.redirect(`/places/${req.params.longitude}&${req.params.latitude}`);
+});
 app.post("/places/:longitude&:latitude/addcreature",async(req, res, next)=>{
   console.log(req.body);
   console.log(req.params);

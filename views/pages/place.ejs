@@ -30,11 +30,23 @@
           <div class="collapse " id="collapseExample">
             <div class="card card-body bg-dark text-light">
               <p class="card-text"><%= trip.description%></p>
+              <h5 class="card-title"> Reviews</h5>
+              <% for(let review of reviews) { %> 
+                <% if(review.trip_id == trip.id ) %> 
+              <div class="card text-bg-warning mb-3">
+                <div class="card-header"><b><%= review.userName %></b></div>
+                <div class="card-body">
+                  <h6 class="card-title">Rating: <%= review.rating %></h6>
+                  <p class="card-text"><%= review.text %></p>
+                </div>
+              </div>
+              <% } %> 
             <h6>Bus id: <%= trip.busId%>, Agency: <%= trip.agency%>, Capacity: <%= trip.capacity%></h6>
             </div>
           </div>
         </p>
           <a class="btn btn-warning" href="/places/<%=place[0].longitude%>&<%=place[0].latitude%>&<%= trip.id %>&<%= trip.company_user_id %>" role="button">Enroll</a>
+          <a class="btn btn-warning" href="/places/<%=place[0].longitude%>&<%=place[0].latitude%>&<%= trip.id %>&<%= trip.company_user_id %>/addreview" role="button">Add A Review</a>
       </div>
     </div>
     <% } %> 
