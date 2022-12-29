@@ -1,0 +1,23 @@
+<% layout("boilerplate") %>
+
+<div class="container mt-5 mb-5">
+  <form 
+  action="/places/<%= req.params.longitude %>&<%=req.params.latitude %>&<%= req.params.id %>&<%= req.params.company_user_id %>/addreview"
+  method="post">
+    <div class=" row justify-content-center">
+    <div class="col-5 card p-5  ">
+    <h5 class="mb-5"> Login</h3>
+      <div class="row mb-3">
+        <label for="Text" class="form-label">Text</label>
+        <input name="text" type="text" class="form-control" id="Text" >
+      </div>
+      <div class="mb-3">    
+        <label for="HotelRating" class="form-label">Example range</label>
+        <input name="rating" type="range" class="form-range" min="0" max="5" step="1" id="HotelRating">
+      </div>
+
+      <button type="submit" class="btn btn-primary row-auto">Submit</button>
+    </div>
+  </div>
+  </form>
+</div>

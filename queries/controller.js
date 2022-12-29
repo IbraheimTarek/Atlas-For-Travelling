@@ -22,10 +22,15 @@ const connection = mysql.createConnection({
   `select distinct hotel.\`name\`, rating,location,discription from hotel, place where place_longitude = ${longitude}  and place_latitude = ${latitude} ;`
   
   module.exports.selectTripsInsidePlace = (longitude,latitude) =>`select DISTINCT id, companyName, company_user_id, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, busId, agency, capacity from place,
-(select companyName, trip.id, company_user_id,  bus.id as busId, agency, capacity, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, place_longitude, place_latitude from trip
-inner join company on company_user_id = user_id inner join bus on bus.id = bus_id) as output 
-where  place_longitude = ${longitude}  and place_latitude = ${latitude}`;
+  (select companyName, trip.id, company_user_id,  bus.id as busId, agency, capacity, price ,tripType, description, numberOfday, \`date\`, noOfExpolorers, place_longitude, place_latitude from trip
+  inner join company on company_user_id = user_id inner join bus on bus.id = bus_id) as output 
+  where  place_longitude = ${longitude}  and place_latitude = ${latitude}`;
 
+  module.exports.selectPlaceReviews = (longitude,latitude) =>`
+  select \`text\`, rating, userName ,trip_id from \`user\`,review, explorer, trip where 
+  trip.id = trip_id and explorer_user_id = user_id and \`user\`.id =user_id and
+   place_longitude = ${longitude} and place_latitude = ${latitude};`
+  
   module.exports.selectPlace = (longitude,latitude) =>(
   `SELECT * from (
     SELECT longitude,latitude, placeType,\`name\`, photoURL,\`history\`,population,religion,n.discription as reserveDiscription,t.discription as topoDiscription,reserveType,landType FROM place 
@@ -36,7 +41,7 @@ where  place_longitude = ${longitude}  and place_latitude = ${latitude}`;
 
     module.exports.selectPlaceCreatures =(longitude,latitude) => `select distinct creature.\`name\`,family,discription,endangered,kingdom from creature_has_place,place,creature
     where creature.\`name\` = creature_name and place_longitude = ${longitude} and ${latitude} = 30.8428 ;`;
-    
+
   module.exports.insertPlace = (req, res, next) =>
   connection.query(
     "INSERT INTO place (longitude, latitude, `name`, country_name, placeType) VALUES (?,?,?,?,?);",
@@ -84,7 +89,21 @@ where  place_longitude = ${longitude}  and place_latitude = ${latitude}`;
       //console.log(fields); // fields contains extra meta data about results,
     }
   );
-
+  module.exports.insertReview =  (req, res, next) =>
+  connection.query(
+    "insert into review( explorer_user_id, trip_id, text, rating) values(?,?,?,?);",
+    [
+      req.session.user_id,
+      req.params.id,//trip id
+      req.body.text,
+      req.body.rating
+    ],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
   module.exports.insertHotel =  (req, res, next) =>
   connection.query(
     "INSERT INTO hotel (name, `discription`, rating, location, place_longitude, place_latitude) VALUES (?,?,?,?,?,?);",
