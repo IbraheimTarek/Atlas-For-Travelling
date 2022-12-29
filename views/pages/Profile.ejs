@@ -7,7 +7,6 @@
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="px-4 pt-0 pb-4 bg-dark">
                 <div class="media align-items-end profile-header" style="transform: translateY(5rem);">
-                    <div class="profile mr-3"><img src="https://bootstrapious.com/i/snippets/sn-profile/teacher.jpg" alt="..." width="130" class="rounded mb-2 img-thumbnail"></div>
                     <div class="media-body mb-5 text-white">
                         <h4 class="mt-0 mb-0"><%= userName %>  </h4>
                         <p class="small mb-4"> </p>
@@ -30,22 +29,23 @@
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h5 class="mb-0">Recent photos</h5>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6 mb-2 pr-lg-1"><img src="https://bootstrapious.com/i/snippets/sn-profile/img-3.jpg" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 mb-2 pl-lg-1"><img src="https://bootstrapious.com/i/snippets/sn-profile/img-4.jpg" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 pr-lg-1 mb-2"><img src="https://bootstrapious.com/i/snippets/sn-profile/img-5.jpg" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 pl-lg-1"><img src="https://bootstrapious.com/i/snippets/sn-profile/img-6.jpg" alt="" class="img-fluid rounded shadow-sm"></div>
+                <div class="row"><% for(let photo of photos) {%> 
+                    <div class="col-lg-6 mb-2 pr-lg-1"><img src="<%= photo.photoURL %> " alt="" class="img-fluid rounded shadow-sm"></div>
+                    <% } %> 
                 </div>
                 <div class="py-4">
                     <h5 class="mb-3">BIO</h5>
                     <div class="p-4 bg-light rounded shadow-sm">
-                        <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim a
-                           al;skdjflaksjd;jkfas;lkdjf;lkasjdjfalskdjf d minim veniam.
+                        <p class="font-italic mb-0"><%= bios[0].bio %> 
                         </p>
-                        
+                        <form action="/deleteaccount?_method=delete" method="post">
+                            <button class="btn btn-danger mt-3 d-flex" role="button">Delete account</button>
+                          </form>
                     </div>
                 </div>
             </div>
+            <div class="profile mr-6"><a href="/insertphoto" class="btn btn-dark btn-sm btn-block">Insert Photo</a></div>
+            <div style="height: 1rem;"></div>
             <div class="profile mr-6"><a href="/updateExplorer" class="btn btn-dark btn-sm btn-block">update bio</a></div>
             <div style="height: 1rem;"></div>
             <div class="profile mr-6"><a href="/updateUser" class="btn btn-dark btn-sm btn-block">update User data</a></div>

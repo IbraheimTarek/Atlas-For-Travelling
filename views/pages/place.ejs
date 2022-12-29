@@ -18,6 +18,11 @@
     </div>
     <% for(let trip of trips) {%> 
     <div class="card bg-black text-light">
+      <% if(isAdmin || (userType == 1 && trip.company_user_id == user_id)) {%> 
+        <form action="/places/<%=place[0].longitude%>&<%=place[0].latitude%>&<%= trip.id %>&<%= trip.company_user_id%>&<%= trip.busId %>/deletetrip?_method=delete" method="post">
+          <button class="btn btn-danger mt-3 d-flex" role="button">X</button>
+        </form>
+        <% } %> 
       <h5 class="card-header">From: <%= trip.companyName%> </h5>
       <h5 class="card-header">Price: <%= trip.price%>$ </h5>
       <h5 class="card-header bg-warning text-dark">Date to lunch: <%= trip.date%> </h5>
@@ -33,8 +38,14 @@
               <h5 class="card-title"> Reviews</h5>
               <% for(let review of reviews) { %> 
                 <% if(review.trip_id == trip.id ) %> 
+                
               <div class="card text-bg-warning mb-3">
                 <div class="card-header"><b><%= review.userName %></b></div>
+                <% if(isAdmin) {%> 
+                  <form action="/places/<%=place[0].longitude%>&<%=place[0].latitude%>&<%= review.trip_id %>&<%= review.explorer_user_id %>/deletereview?_method=delete" method="post">
+                    <button class="btn btn-danger mt-3 d-flex" role="button">X</button>
+                  </form>
+                  <% } %> 
                 <div class="card-body">
                   <h6 class="card-title">Rating: <%= review.rating %></h6>
                   <p class="card-text"><%= review.text %></p>
@@ -70,7 +81,7 @@
       <% } %>
        <% if(isAdmin) {%>  
       <a class="btn mt-3 btn-warning btn-block" href="/places/<%=place[0].longitude%>&<%=place[0].latitude%>/addcreature" role="button">Add Creature</a>
-        <form action="" method="">
+        <form action="/places/<%=place[0].longitude%>&<%=place[0].latitude%>/deleteplace?_method=delete" method="post">
           <button class="btn btn-danger mt-3" role="button">X</button>
         </form>
         <% } %> 
@@ -93,7 +104,12 @@
   <!-- Hotels -->
   <% for(let hotel of hotels) { %> 
  <div class="card text-bg-warning mb-3" style="max-width: 18rem;">
-  <h4 class="card-header"><%= hotel.name %> </h4>
+  <% if(isAdmin) {%> 
+  <form action="/places/<%=place[0].longitude%>&<%=place[0].latitude%>&<%= hotel.name %>/deletehotel?_method=delete" method="post">
+    <button class="btn btn-danger mt-3 d-flex" role="button">X</button>
+  </form>
+  <% } %> 
+  <h4 class="card-header d-flex"><%= hotel.name %> </h4>
   <div class="card-body">
     <h6 class="card-title">Location: <%= hotel.location %></h6>
     <h6 class="card-title"><%= hotel.rating %> Stars</h6>

@@ -3,11 +3,17 @@ const ExpressErrors = require("../utlis/ExpressErrors");
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "qqqq1111", //passwordchanges
+  password: "bogo", //passwordchanges
   database: "mydb",
 });
 
+
+  module.exports.selectExplorerPhotos =(req) =>`select photoURL from explorerphotos where explorer_user_id= ${req.session.user_id};`
+  module.exports.selectExplorerBio =(req) =>`select bio from explorer where user_id= ${req.session.user_id};`
+  module.exports.selectCompanyBio =(req) =>`select bio from company where user_id =${req.session.user_id};`
+
   module.exports.selectCreatures = `select name from creature`;
+
   module.exports.selectCities =
   "SELECT longitude,latitude,`name`,`history`,population,religion FROM place INNER JOIN city ON longitude = place_longitude AND latitude = place_latitude;", //, returns an object arrys
 
@@ -18,6 +24,8 @@ const connection = mysql.createConnection({
   module.exports.selectCitiesWithPhotos =  
   "select longitude,latitude,`name`,`history`,population,religion,photoURL from place,city as c,placePhotos as p where longitude = c.place_longitude AND latitude = c.place_latitude and longitude = p.place_longitude AND latitude = p.place_latitude;";
   
+  module.exports.selectCompanyBuses = (req) => `select distinct bus.id,bus.agency from company, trip, bus where bus.id = bus_id and company_user_id = ${req.session.user_id} ;`
+
   module.exports.selectPlaceHotels = (longitude,latitude) =>
   `select distinct hotel.\`name\`, rating,location,discription from hotel, place where place_longitude = ${longitude}  and place_latitude = ${latitude} ;`
   
@@ -27,7 +35,7 @@ const connection = mysql.createConnection({
   where  place_longitude = ${longitude}  and place_latitude = ${latitude}`;
 
   module.exports.selectPlaceReviews = (longitude,latitude) =>`
-  select \`text\`, rating, userName ,trip_id from \`user\`,review, explorer, trip where 
+  select \`text\`, rating, userName, explorer_user_id,trip_id from \`user\`,review, explorer, trip where 
   trip.id = trip_id and explorer_user_id = user_id and \`user\`.id =user_id and
    place_longitude = ${longitude} and place_latitude = ${latitude};`
   
@@ -40,7 +48,7 @@ const connection = mysql.createConnection({
     left outer JOIN placePhotos as p ON longitude = p.place_longitude AND latitude = p.place_latitude) as ccc where ccc.longitude = ${longitude} AND ccc.latitude = ${latitude} ;`);//, returns an object arrys
 
     module.exports.selectPlaceCreatures =(longitude,latitude) => `select distinct creature.\`name\`,family,discription,endangered,kingdom from creature_has_place,place,creature
-    where creature.\`name\` = creature_name and place_longitude = ${longitude} and ${latitude} = 30.8428 ;`;
+    where creature.\`name\` = creature_name and place_longitude = ${longitude} and ${latitude} = place_latitude ;`;
 
   module.exports.insertPlace = (req, res, next) =>
   connection.query(
@@ -283,7 +291,7 @@ module.exports.insertPlacePhoto = (req, res, next) =>
   connection.query(
     "INSERT INTO bus (id, agency,capacity)  VALUES (?,?,?) ;",
     [
-      req.body.id,
+      req.body.bus_id,
       req.body.agency,
       req.body.capacity,
     ],
@@ -296,7 +304,7 @@ module.exports.insertPlacePhoto = (req, res, next) =>
     `INSERT INTO trip  (id, price, tripType, numberOfDay, \`description\`, \`date\`, company_user_id, bus_id, place_longitude, place_latitude,noOfExpolorers)  
     VALUES (?,?,?,?,?,?,${req.session.user_id},?,?,?,?);`,
     [
-      req.body.id,
+      req.body.trip_id,
       req.body.price,
       req.body.tripType,
       req.body.numberOfDay,
@@ -380,3 +388,83 @@ module.exports.insertPlacePhoto = (req, res, next) =>
 
       }
     );
+
+
+     ////////////////////////// delete //////////////////////////
+
+     module.exports.deleteHotel = (req, res, next) =>
+     connection.query(
+       `delete from  hotel where name=\'${req.params.name}\';`
+       ,  async(error, results) => {
+         if (error) throw error;
+         console.log(results); // results contains rows returned by server
+         //console.log(fields); // fields contains extra meta data about results,
+       }
+     );
+
+     module.exports.deletereview = (req, res, next) =>
+     connection.query(
+       `delete from  review where trip_id= ${req.params.trip_id} and explorer_user_id=${req.params.explorer_user_id};`
+       ,  async(error, results) => {
+         if (error) throw error;
+         console.log(results); // results contains rows returned by server
+         //console.log(fields); // fields contains extra meta data about results,
+       }
+     );
+     module.exports.deletetrip = (req, res, next) =>
+     connection.query(
+       `delete from  trip where id= ${req.params.id} and company_user_id=${req.params.company_user_id};`
+       ,  async(error, results) => {
+         if (error) throw error;
+         console.log(results); // results contains rows returned by server
+         //console.log(fields); // fields contains extra meta data about results,
+       }
+     );
+
+     module.exports.deleteplace= (req, res, next) =>
+     connection.query(
+       `delete from  place where longitude=${req.params.longitude} and latitude=${req.params.latitude};`
+       ,  async(error, results) => {
+         if (error) throw error;
+         console.log(results); // results contains rows returned by server
+         //console.log(fields); // fields contains extra meta data about results,
+       }
+     );
+
+     module.exports.deletecreature= (req, res, next) =>
+     connection.query(
+       `delete from  creature where name=\'${req.body.name}\';`
+       ,  async(error, results) => {
+         if (error) throw error;
+         console.log(results); // results contains rows returned by server
+         //console.log(fields); // fields contains extra meta data about results,
+       }
+     );
+     module.exports.deleteaccount= (req, res, next) =>
+     connection.query(
+       `delete from user where id=${req.session.user_id};`
+       ,  async(error, results) => {
+         if (error) throw error;
+         console.log(results); // results contains rows returned by server
+         //console.log(fields); // fields contains extra meta data about results,
+       }
+     );
+     module.exports.deletebus= (req, res, next) =>
+     connection.query(
+       `delete from  bus where id=\'${req.params.bus_id}\' ;`,async(error, results) => {
+        if (error) throw error;
+        console.log(results); // results contains rows returned by server
+        //console.log(fields); // fields contains extra meta data about results,
+      }
+     );
+
+     module.exports.insertPlacePhoto = (req, res, next) =>
+  connection.query(
+    "INSERT INTO explorerPhotos (explorer_user_id, photoURL) VALUES (?,?);",
+    [req.session.user_id, req.body.photoURL],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
