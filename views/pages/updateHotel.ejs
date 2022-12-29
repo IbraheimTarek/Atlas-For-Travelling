@@ -13,32 +13,33 @@
       class="form-control"
       id="hotelName"
       aria-describedby="emailHelp"
+      required
     />
   </div>
   <div class="mb-3">    
     <label for="HotelRating" class="form-label">Example range</label>
-    <input name="rating" type="range" class="form-range" min="0" max="5" step="1" id="HotelRating">
+    <input name="rating" type="range" class="form-range" min="0" max="5" step="1" id="HotelRating" required>
   </div>
 
   <div class="mb-3">
     <label for="Location" class="form-label">Location</label>
-    <input name="location" type="text" class="form-control" id="Location" />
+    <input name="location" type="text" class="form-control" id="Location" required/>
   </div>
 
   <div class="mb-3">
     <label for="discription" class="form-label">Discription</label>
-    <textarea name="discription" class="form-control" id="discription" rows="3"></textarea>
+    <textarea name="discription" class="form-control" id="discription" rows="3" required></textarea>
   </div>
   
   <div class="mb-3"> Associate place</div>
   <div class="row g-3">
     <div class="col-auto">
       <label for="Longitude" class="form-label">Longitude</label>
-      <input name="place_longitude" type="text" class="form-control" id="Longitude" >
+      <input name="place_longitude" type="text" class="form-control" id="Longitude" required>
     </div>
     <div class="col-auto">
       <label for="Latitude" class="form-label">Latitude</label>
-      <input name="place_latitude" type="text" class="form-control" id="Latitude">
+      <input name="place_latitude" type="text" class="form-control" id="Latitude"required>
     </div>
   </div>
 

@@ -4,56 +4,56 @@
     <form action="/trip" method="post">
       <div class="mb-3">
         <label for="trip_id" class="form-label">Trip ID</label>
-        <input name="trip_id" type="text" class="form-control" id="trip_id" aria-describedby="emailHelp" />
+        <input name="trip_id" type="text" class="form-control" id="trip_id" aria-describedby="emailHelp" required/>
       </div>
       <div class="mb-3">
         <label for="Price" class="form-label">Price</label>
-        <input name="price" type="text" class="form-control" id="Price" />
+        <input name="price" type="text" class="form-control" id="Price" required/>
       </div>
 
       <div class="mb-3">
         <label for="TripType" class="form-label">Trip Type</label>
-        <input name="tripType" type="text" class="form-control" id="TripType" />
+        <input name="tripType" type="text" class="form-control" id="TripType" required/>
       </div>
 
       <div class="mb-3">
         <label for="NumberOfDay" class="form-label">Number of days</label>
-        <input name="numberOfDay" class="form-control" id="NumberOfDay" rows="3"></input>
+        <input name="numberOfDay" class="form-control" id="NumberOfDay" rows="3" required></input>
       </div>
 
       <div class="mb-3">
         <label for="description" class="form-label">Discription</label>
-        <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+        <textarea name="description" class="form-control" id="description" rows="3"required></textarea>
       </div>
 
       <div class="mb-3">
         <label for="Date" class="form-label">date</label>
-        <input name="date" class="form-control" id="Date" rows="3"></input>
+        <input name="date" class="form-control" id="Date" rows="3"required></input>
       </div>
 
       <div class="mt-3 mb-2"> Associate place</div>
       <div class="row g-3">
         <div class="col-auto">
           <label for="Longitude" class="form-label">Longitude</label>
-          <input name="place_longitude" type="text" class="form-control" id="Longitude">
+          <input name="place_longitude" type="text" class="form-control" id="Longitude"required>
         </div>
         <div class="col-auto">
           <label for="Latitude" class="form-label">Latitude</label>
-          <input name="place_latitude" type="text" class="form-control" id="Latitude">
+          <input name="place_latitude" type="text" class="form-control" id="Latitude"required>
         </div>
       </div>
 
       <div class="mb-3">
         <label for="bus_id" class="form-label">Bus ID</label>
-        <input name="bus_id" type="text" class="form-control" id="bus_id" />
+        <input name="bus_id" type="text" class="form-control" id="bus_id" required/>
       </div>    
       <div class="mb-3">
         <label for="agency" class="form-label">agency</label>
-        <input name="agency" type="text" class="form-control" id="agency" />
+        <input name="agency" type="text" class="form-control" id="agency" required/>
       </div>
       <div class="mb-3">
         <label for="capacity" class="form-label">capacity</label>
-        <input name="capacity" type="text" class="form-control" id="capacity" />
+        <input name="capacity" type="text" class="form-control" id="capacity" required/>
       </div>
       <button type="submit" class="btn btn-success btn-insert">Insert</button>
     </form>
