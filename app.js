@@ -316,8 +316,26 @@ app.put("/places",async (req, res, next) => {
     res.redirect("/")
 });
 
+app.put("/User", async (req, res) => {
+  console.log(req.body);
+  if(req.body.userType == 0){
+    controller.updateUserExplorer(req);
+  }else if(req.body.userType == 1){
+    controller.updateUserCompany(req)
+  }
+  res.redirect("/");
+});
 
-
+app.put("/User", async (req, res) => {
+  console.log(req.body);
+  controller.updateUser(req);
+  res.redirect("/");
+});
+app.put("/User", async (req, res) => {
+  console.log(req.body);
+  controller.updateCompany(req);
+  res.redirect("/");
+});
 
 
 
@@ -384,8 +402,14 @@ app.get("/places/updateTopography", async (req, res) => {
 app.get("/updateBus", (req, res) => {
   res.render("pages/updateBus");
 });
+app.get("/updateExplorer", (req, res) => {
+  res.render("pages/updateExplorer");
+});
 app.get("/updateUser", (req, res) => {
   res.render("pages/updateUser");
+});
+app.get("/updateCompany", (req, res) => {
+  res.render("pages/updateCompany");
 });
 app.get("/updateCreature", (req, res) => {
   res.render("pages/updateCreature");
