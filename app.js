@@ -544,8 +544,12 @@ app.get("/profile",isLoggedIn, (req, res,next) => {
     next();
   }
 });
-app.get("/insertProfilePhoto",companyOnly, (req, res) => {
+app.get("/insertphoto",verifyExplorer, (req, res) => {
   res.render("pages/insertPhoto");
+});
+app.post("/insertphoto",verifyExplorer, (req, res) => {
+  controller.insertPlacePhoto(req);
+  res.redirect("/profile");
 });
 app.get("/", (req, res) => {
   res.render("pages/home");

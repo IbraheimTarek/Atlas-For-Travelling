@@ -457,3 +457,14 @@ module.exports.insertPlacePhoto = (req, res, next) =>
         //console.log(fields); // fields contains extra meta data about results,
       }
      );
+
+     module.exports.insertPlacePhoto = (req, res, next) =>
+  connection.query(
+    "INSERT INTO explorerPhotos (explorer_user_id, photoURL) VALUES (?,?);",
+    [req.session.user_id, req.body.photoURL],
+    async(error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+    }
+  );
