@@ -358,6 +358,37 @@ module.exports.insertPlacePhoto = (req, res, next) =>
         //console.log(fields); // fields contains extra meta data about results,
       }
     );
+    module.exports.updateUserExplorer = (req, res, next) =>
+    connection.query(
+      `update explorer set bio=\'${req.body.bio}\' where user_id=${req.session.user_id};`,
+      async(error, results) => {
+        if (error) throw error;
+        console.log(results); // results contains rows returned by server
+        //console.log(fields); // fields contains extra meta data about results,
+
+      }
+    );
+    module.exports.updateUser = (req, res, next) =>
+    connection.query(
+      `update user set userName=\'${req.body.userName}\',email=\'${req.body.email}\',password=\'${req.body.password}\' where user_id=${req.session.user_id};`,
+      async(error, results) => {
+        if (error) throw error;
+        console.log(results); // results contains rows returned by server
+        //console.log(fields); // fields contains extra meta data about results,
+
+      }
+    );
+    module.exports.updateCompany = (req, res, next) =>
+    connection.query(
+      `update company set bio=\'${req.body.bio}\' ,companyName=\'${req.body.companyName}\'  where user_id=${req.session.user_id};`,
+      async(error, results) => {
+        if (error) throw error;
+        console.log(results); // results contains rows returned by server
+        //console.log(fields); // fields contains extra meta data about results,
+
+      }
+    );
+
 
      ////////////////////////// delete //////////////////////////
 
