@@ -48,7 +48,7 @@
 .contact {
     padding-top: 60px;
     padding-bottom: 60px;
-    background-color: #f6f6f6;
+    background-color: black;
     text-align: center;
   }
   .contact .container .special-heading {
@@ -58,14 +58,14 @@
     padding: 60px 0;
   }
   .contact .container .text p {
-    color: #28b485;
+    color: #ffc107;
     font-size: 35px;
     font-weight: 800;
     letter-spacing: -2px;
     margin-bottom: 15px;
   }
   .contact .container .text a {
-    color: #28b485;
+    color: #ffc107;
     font-size: 35px;
     font-weight: 800;
     text-decoration: none;
@@ -78,7 +78,7 @@
   }
   .contact .container .text .social i {
     margin-left: 10px;
-    color: #28b485;
+    color: #ffc107;
   
   }
   @media (max-width:767px) {
@@ -99,7 +99,7 @@
   /* end contact */
   /* Start Footer */
   .footer {
-    background-color: #28b485;
+    background-color: #ffc107;
     color: white;
     padding: 30px 10px;
     text-align: center;
