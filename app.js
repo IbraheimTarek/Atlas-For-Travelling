@@ -33,7 +33,7 @@ app.use(method("_method"));
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: 'qqqq1111',//passwordchanges
+  password: 'bogo',//passwordchanges
   database: "mydb",
 });
 
@@ -78,8 +78,14 @@ const verifyCompany= (req, res, next) => {
   }
   return res.redirect("/login");
 };
+const companyOnly= (req, res, next) => {
+  if(req.session.userType == 1 ){
+  next();
+  }
+  return res.redirect("/login");
+};
 const verifyExplorer= (req, res, next) => {
-  if(req.session.userType == 0 || req.session.isAdmin){
+  if(req.session.userType == 0 ){
   next();
   }
   throw (new ExpressErrors("You should be an explorer"));
@@ -95,7 +101,7 @@ app.get("/places/:longitude&:latitude&:id&:company_user_id/addreview",verifyExpl
   res.render(`pages/addreview`,{req});
 });
 
-app.get("/places/:longitude&:latitude", async (req, res, next) => {
+app.get("/places/:longitude&:latitude",isLoggedIn, async (req, res, next) => {
   console.log(req.params);
   connection.query(
     controller.selectPlace(req.params.longitude, req.params.latitude),
@@ -163,10 +169,35 @@ app.get("/places",isLoggedIn, async (req, res) => {
   );
 });
 
+app.get("/deletecreature",verifyAdmin, async(req, res, next)=>{
+  connection.query(
+    controller.selectCreatures,
+    async (error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+      const creatures = results;
+      res.render("pages/chooseCreatureToDelete",{creatures , req});
+    }
+  );
 
+});
 
+app.get("/deletebus",async(req, res, next)=>{
+  connection.query(
+    controller.selectCompanyBuses(req),
+    async (error, results) => {
+      if (error) throw error;
+      console.log(results); // results contains rows returned by server
+      //console.log(fields); // fields contains extra meta data about results,
+      const buses = results;
+      res.render("pages/busToDelete",{buses , req});
+    }
+  );
 
-app.get("/places/:longitude&:latitude/addcreature",async(req, res, next)=>{
+});
+
+app.get("/places/:longitude&:latitude/addcreature",verifyAdmin,async(req, res, next)=>{
   connection.query(
     controller.selectCreatures,
     async (error, results) => {
@@ -185,14 +216,14 @@ app.post("/places/:longitude&:latitude&:id&:company_user_id/addreview",verifyExp
   controller.insertReview(req);
   res.redirect(`/places/${req.params.longitude}&${req.params.latitude}`);
 });
-app.post("/places/:longitude&:latitude/addcreature",async(req, res, next)=>{
+app.post("/places/:longitude&:latitude/addcreature",verifyAdmin,async(req, res, next)=>{
   console.log(req.body);
   console.log(req.params);
   controller.insertCreatureHasPlace(req);
   res.redirect(`/places/${req.params.longitude}&${req.params.latitude}`);
 });
 
-app.post("/places", async (req, res) => {
+app.post("/places",verifyAdmin, async (req, res) => {
   console.log(req.body);
   controller.insertPlace(req);
   if (req.body.placeType == 0) {
@@ -207,24 +238,24 @@ app.post("/places", async (req, res) => {
 });
 
 
-app.post("/Bus",async (req, res, next) => {
-  console.log(req.body);
-  const qry = controller.insertBus(req);
-    qry.on('error', function(err) {
-      next(err);
-      console.log("failed to insert data");
-    })
-    .on('fields', function(fields) {
-      // the field packets for the rows to follow
-    })
-    .on('result', function(row) {
-      console.log(row);
-    })
-    .on('end', function() {
-      // all rows have been received
-    });
-    res.redirect("/")
-});
+// app.post("/Bus",async (req, res, next) => {
+//   console.log(req.body);
+//   const qry = controller.insertBus(req);
+//     qry.on('error', function(err) {
+//       next(err);
+//       console.log("failed to insert data");
+//     })
+//     .on('fields', function(fields) {
+//       // the field packets for the rows to follow
+//     })
+//     .on('result', function(row) {
+//       console.log(row);
+//     })
+//     .on('end', function() {
+//       // all rows have been received
+//     });
+//     res.redirect("/")
+// });
 
 
 
@@ -279,7 +310,7 @@ app.post("/login", async (req, res,next) => {
   );
   
 
-app.post("/creature", async (req, res,next) => {
+app.post("/creature",verifyAdmin, async (req, res,next) => {
   if(req.body.endangered == null){
     req.body.endangered = false;
   }else{
@@ -292,7 +323,7 @@ app.post("/creature", async (req, res,next) => {
     next(e);
   }
 });
-app.post("/hotel", async (req, res,next) => {
+app.post("/hotel",verifyAdmin, async (req, res,next) => {
   console.log(req.body);
   try{
     controller.insertHotel(req);
@@ -302,10 +333,24 @@ app.post("/hotel", async (req, res,next) => {
   }
 });
 
-app.post("/trip",isLoggedIn,verifyCompany, ( async(req, res,next) => {
+app.post("/trip",isLoggedIn,companyOnly, ( async(req, res,next) => {
   console.log(req.body);
-  const qry =  controller.insertTrip(req);
-  qry.on('error', function(err) {
+  const qry1 = controller.insertBus(req);
+  qry1.on('error', function(err) {
+    next(err);
+    console.log("failed to insert data");
+  })
+  .on('fields', function(fields) {
+    // the field packets for the rows to follow
+  })
+  .on('result', function(row) {
+    console.log(row);
+  })
+  .on('end', function() {
+    // all rows have been received
+  });
+  const qry2 =  controller.insertTrip(req);
+  qry2.on('error', function(err) {
   })
   .on('fields', function(fields) {
   })
@@ -314,6 +359,7 @@ app.post("/trip",isLoggedIn,verifyCompany, ( async(req, res,next) => {
   })
   .on('end', function() {
   });
+  
   res.redirect("/places");
 }));
 
@@ -324,27 +370,16 @@ app.post("/insertAdmin",verifyAdmin,(req, res) => {
 ////////////////////////// app.put //////////////////////////
 
 
-app.put("/Bus",async (req, res, next) => {
+app.put("/Bus",verifyCompany,async (req, res, next) => {
   console.log(req.body);
   const qry = controller.updateBus(req);
     res.redirect("/")
 });
-app.put("/places",async (req, res, next) => {
+app.put("/places",verifyAdmin,async (req, res, next) => {
   console.log(req.body);
   const qry = controller.updateHotel(req);
     res.redirect("/")
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -362,57 +397,55 @@ app.get("/insertAdmin",verifyAdmin,(req, res) => {
 });
 
 // insert
-app.get("/places/insertCity", async (req, res) => {
+app.get("/places/insertCity",verifyAdmin, async (req, res) => {
   res.render("pages/insertCity");
 });
 
-app.get("/places/insertNatureReserve", async (req, res) => {
+app.get("/places/insertNatureReserve",verifyAdmin, async (req, res) => {
   res.render("pages/insertNatureReserve");
 });
-app.get("/places/insertTopography", async (req, res) => {
+app.get("/places/insertTopography",verifyAdmin, async (req, res) => {
   res.render("pages/insertTopography");
 });
-app.get("/insertBus", (req, res) => {
-  res.render("pages/insertBus");
-});
-app.get("/insertUser", (req, res) => {
-  res.render("pages/insertUser");
-});
-app.get("/insertCreature", (req, res) => {
+// app.get("/insertBus", (req, res) => {
+//   res.render("pages/insertBus");
+// });
+
+app.get("/insertCreature",verifyAdmin, (req, res) => {
   res.render("pages/insertCreature");
 });
-app.get("/insertHotel", (req, res) => {
+app.get("/insertHotel",verifyAdmin, (req, res) => {
   res.render("pages/insertHotel");
 });
-app.get("/insertTrip", (req, res) => {
+app.get("/insertTrip",companyOnly, (req, res) => {
   res.render("pages/insertTrip");
 });
 
 // update
 
-app.get("/places/updateCity", async (req, res) => {
+app.get("/places/updateCity",verifyAdmin, async (req, res) => {
   res.render("pages/updateCity");
 });
 
-app.get("/places/updateNatureReserve", async (req, res) => {
+app.get("/places/updateNatureReserve",verifyAdmin, async (req, res) => {
   res.render("pages/updateNatureReserve");
 });
-app.get("/places/updateTopography", async (req, res) => {
+app.get("/places/updateTopography",verifyAdmin, async (req, res) => {
   res.render("pages/updateTopography");
 });
-app.get("/updateBus", (req, res) => {
+app.get("/updateBus",verifyCompany, (req, res) => {
   res.render("pages/updateBus");
 });
-app.get("/updateUser", (req, res) => {
+app.get("/updateUser",isLoggedIn, (req, res) => {
   res.render("pages/updateUser");
 });
-app.get("/updateCreature", (req, res) => {
+app.get("/updateCreature",verifyAdmin, (req, res) => {
   res.render("pages/updateCreature");
 });
-app.get("/updateHotel", (req, res) => {
+app.get("/updateHotel",verifyAdmin, (req, res) => {
   res.render("pages/updateHotel");
 });
-app.get("/updateTrip", (req, res) => {
+app.get("/updateTrip",companyOnly, (req, res) => {
   res.render("pages/updateTrip");
 });
 
@@ -426,9 +459,6 @@ app.get("/registerforcompany", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("pages/login");
 });
-app.get("/trips", (req, res) => {
-  res.render("pages/Trips");
-});
 app.get("/logout",(req, res) => {
   req.session.destroy();
   res.redirect("/");
@@ -436,12 +466,41 @@ app.get("/logout",(req, res) => {
 app.get("/register", (req, res) => {
   res.render("pages/register");
 });
-app.get("/profile", (req, res,next) => {
+app.get("/profile",isLoggedIn, (req, res,next) => {
   if(req.session.userType == 0){
-    res.render("pages/Profile");
+    connection.query(
+      controller.selectExplorerBio(req),
+      async (error, results) => {
+        if (error) throw error;
+        console.log(results); // results contains rows returned by server
+        //console.log(fields); // fields contains extra meta data about results,
+        const bios = results;
+        connection.query(
+          controller.selectExplorerPhotos(req),
+          async (error, results) => {
+            if (error) throw error;
+            console.log(results); // results contains rows returned by server
+            //console.log(fields); // fields contains extra meta data about results,
+            const photos = results;
+            
+            res.render("pages/Profile",{bios,photos});
+          }
+        );
+      }
+    );
+    
   }
   else if(req.session.userType == 1 ){
-    res.render("pages/CompanyProfile");
+    connection.query(
+      controller.selectCompanyBio(req),
+      async (error, results) => {
+        if (error) throw error;
+        console.log(results); // results contains rows returned by server
+        //console.log(fields); // fields contains extra meta data about results,
+        const bios = results;
+        res.render("pages/CompanyProfile",{bios});
+      }
+    );
   }
   else if(req.session.isAdmin){
   res.render("pages/AdminProfile");
@@ -450,12 +509,50 @@ app.get("/profile", (req, res,next) => {
     next();
   }
 });
+app.get("/insertProfilePhoto",companyOnly, (req, res) => {
+  res.render("pages/insertPhoto");
+});
 app.get("/", (req, res) => {
   res.render("pages/home");
 });
 
+//////////////////// delete////////////////////////////
+app.delete("/places/:longitude&:latitude/deleteplace",verifyAdmin,(req, res) => {
+  console.log(req.params);
+  controller.deleteplace(req);
+  res.redirect(`/places`);
+});
+app.delete("/places/:longitude&:latitude&:id&:company_user_id&:bus_id/deletetrip",verifyCompany,(req, res) => {
+  console.log(req.params);
+  controller.deletetrip(req);
+  controller.deletebus(req);
+  res.redirect(`/places/${req.params.longitude}&${req.params.latitude}`);
+});
+app.delete("/places/:longitude&:latitude&:name/deletehotel",verifyAdmin,(req, res) => {
+  controller.deleteHotel(req);
+  res.redirect(`/places/${req.params.longitude}&${req.params.latitude}`);
+});
+app.delete("/places/:longitude&:latitude&:trip_id&:explorer_user_id/deletereview",verifyAdmin,(req, res) => {
+  console.log(req.params);
+  controller.deletereview(req);
+  res.redirect(`/places/${req.params.longitude}&${req.params.latitude}`);
+});
+app.delete("/deletecreature",verifyAdmin,(req, res) => {
+  console.log(req.body);
+  controller.deletecreature(req);
+  res.redirect(`/`);
+});
+app.delete("/deleteaccount",isLoggedIn,(req, res) => {
+  console.log(req.body);
+  controller.deleteaccount(req);
+  res.redirect(`/`);
+});
 
-
+app.delete("/deletebus",verifyAdmin,(req, res) => {
+  console.log(req.body);
+  controller.deletebus(req);
+  res.redirect(`/`);
+});
 
 app.all("*", (req, res, next) => {
   next(new ExpressErrors("Page Not Found", 404));

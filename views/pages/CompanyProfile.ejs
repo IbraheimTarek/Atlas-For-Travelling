@@ -29,13 +29,14 @@
                 <div class="py-4">
                     <h5 class="mb-3">BIO</h5>
                     <div class="p-4 bg-light rounded shadow-sm">
-                        <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim a
-                           al;skdjflaksjd;jkfas;lkdjf;lkasjdjfalskdjf d minim veniam.
+                        <p class="font-italic mb-0"><%= bios[0].bio  %> 
                         </p>
-
                     </div>
                 </div>
             </div>
+            <form action="/deleteaccount?_method=delete" method="post">
+                <button class="btn btn-danger mt-3 d-flex" role="button">Delete account</button>
+              </form>
             <div class="profile mr-6"><a href="/insertTrip" class="btn btn-dark btn-sm btn-block">Add Trip</a></div>
             <div style="height: 1rem;"></div>
             <div class="profile mr-6"><a href="/insertBus" class="btn btn-dark btn-sm btn-block">Add Bus</a></div>
